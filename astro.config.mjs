@@ -12,18 +12,22 @@ export default defineConfig({
       title: 'Open Hackathon Playbook',
       // social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/AdventureX-RGE' }],
       sidebar: [
+          // {
+          //     label: 'Start Here',
+          //     items: [
+          //         // Each item here is one entry in the navigation menu.
+          //         { label: 'Example Guide',
+          //           slug: 'guides/example',
+          //         },
+          //     ],
+          // },
           {
-              label: 'Start Here',
-              items: [
-                  // Each item here is one entry in the navigation menu.
-                  { label: 'Example Guide',
-                    slug: 'guides/example',
-                  },
-              ],
+            label: 'Start Here',
+            autogenerate: { directory: 'start_here' },
           },
           {
-              label: 'Reference',
-              autogenerate: { directory: 'reference' },
+              label: 'Examples',
+              autogenerate: { directory: 'examples' },
           },
       ],
       customCss: [
