@@ -8,9 +8,10 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://adventure-x.org',
   integrations: [starlight({
       title: 'Open Hackathon Playbook',
-      // social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/AdventureX-RGE' }],
+    // social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/AdventureX-RGE' }],
       sidebar: [
           // {
           //     label: 'Start Here',
