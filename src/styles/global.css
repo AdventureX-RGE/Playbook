@@ -6,10 +6,12 @@
 
 :root {
     --color-bg: #0A0A0A;
-    --color-text: #F2F2F2;
+    --color-white: #F2F2F2;
     --color-muted: #7B7B80;
     --color-accent: #F48529;
     --color-border: #29292C;
+
+    --color-text: var(--color-white);
 
     --sl-color-bg: var(--color-bg);
     --sl-color-bg-sidebar: var(--color-bg);
@@ -75,3 +77,24 @@ li {
     color: var(--color-text);
 }
 
+h1 {
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 48px;
+}
+
+h2 {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+h3 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+p {
+    font-size: 20px;
+    line-height: 28px;
+}
