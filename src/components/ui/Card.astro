@@ -3,131 +3,80 @@ import { Icon } from "@astrojs/starlight/components";
 import type { StarlightIcon } from "@astrojs/starlight/types";
 
 interface Props {
-	leftIcon?: StarlightIcon;
-	rightIcon?: StarlightIcon;
-	title: string;
-	titleBadge?: boolean;
-	contentBadge?: boolean;
+  leftIcon?: StarlightIcon;
+  rightIcon?: StarlightIcon;
+  title: string;
+  titleBadge?: boolean;
+  contentBadge?: boolean;
 }
 
 const {
-	leftIcon,
-	rightIcon,
-	title,
-	titleBadge = false,
-	contentBadge = false,
+  leftIcon,
+  rightIcon,
+  title,
+  titleBadge = false,
+  contentBadge = false,
 } = Astro.props;
 ---
 
-<article class="card">
-	<div class="card-header">
-		<div class="header-left">
-			{leftIcon && <Icon name={leftIcon} class="icon" size="2em" />}
-			<h3 class="title" set:html={title} />
-		</div>
-		<div class="header-right">
-			{titleBadge && <span class="badge">badges</span>}
-			{rightIcon && <Icon name={rightIcon} class="icon" size="2em" />}
-		</div>
-	</div>
-	<div class="card-body">
-		<div class="body-content"><slot /></div>
-		{contentBadge && <span class="badge">badges</span>}
-	</div>
+<article
+  class="flex flex-col gap-3 overflow-hidden min-w-45 rounded-xl
+  border border-(--sl-color-gray-5) bg-[rgba(48,48,52,0.24)]
+  p-6 transition-colors hover:bg-[rgba(48,48,52,0.72)]"
+>
+  <div class="flex items-center justify-between gap-2.5 w-full min-h-8">
+    <div class="flex items-center gap-2.5 min-w-0">
+      {
+        leftIcon && (
+          <Icon
+            name={leftIcon}
+            size="2em"
+            class="flex items-center justify-center shrink-0 w-8 h-8 p-1.5"
+          />
+        )
+      }
+      <h3
+        class="text-[24px] font-bold leading-none m-0 whitespace-nowrap
+        overflow-hidden text-ellipsis flex-1"
+        set:html={title}
+      />
+    </div>
+    <div class="flex items-center gap-2.5 min-w-0">
+      {
+        titleBadge && (
+          <span
+            class="inline-flex items-center justify-center rounded-md bg-[#606065] 
+            px-1 py-0.5 text-[14px] leading-[1.2]"
+          >
+            badges
+          </span>
+        )
+      }
+      {
+        rightIcon && (
+          <Icon
+            name={rightIcon}
+            size="2em"
+            class="flex items-center justify-center shrink-0 w-8 h-8 p-1.5"
+          />
+        )
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-1 w-full">
+    <div class="flex-1 min-w-60 text-[14px]">
+      <slot />
+    </div>
+    {
+      contentBadge && (
+        <span
+          class="inline-flex items-center justify-center rounded-md
+        bg-[#606065] px-1 py-0.5  text-[14px] leading-[1.2]"
+        >
+          badges
+        </span>
+      )
+    }
+  </div>
 </article>
-
-<style>
-	@layer starlight.components {
-		.card {
-			border: 1px solid var(--sl-color-gray-5);
-			background-color: rgba(48, 48, 52, 0.24);
-			padding: 24px;
-			border-radius: 12px;
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-			overflow: hidden;
-			min-width: 180px;
-			transition: background-color 0.2s ease;
-		}
-
-		.card:hover {
-			background-color: rgba(48, 48, 52, 0.72);
-		}
-
-		.card-header {
-			display: flex;
-			gap: 10px;
-			align-items: center;
-			justify-content: space-between;
-			width: 100%;
-			min-height: 32px;
-		}
-
-		.header-left,
-		.header-right {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			min-width: 0;
-			margin-top: auto;
-			margin-bottom: auto;
-		}
-
-		.title {
-			font-family: "Patika", sans-serif;
-			font-size: 24px;
-			font-weight: 700;
-			line-height: 1;
-			color: var(--sl-color-white);
-			margin: 0;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			flex: 1;
-		}
-
-		.card .icon {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 6px;
-			flex-shrink: 0;
-			width: 32px;
-			height: 32px;
-		}
-
-		.card-body {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 4px;
-			align-items: center;
-			width: 100%;
-		}
-
-		.body-content {
-			font-family: "Patika", sans-serif;
-			font-size: 14px;
-			font-weight: 400;
-			line-height: 1.5;
-			color: var(--sl-color-white);
-			min-width: 240px;
-			flex: 1;
-		}
-
-		.body-content :global(code),
-		.badge {
-			background-color: #606065;
-			color: var(--sl-color-white);
-			padding: 2px 4px;
-			border-radius: 6px;
-			font-family: "Patika", sans-serif;
-			font-size: 14px;
-			font-weight: 400;
-			line-height: 1.2;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-		}
-	}
-</style>
