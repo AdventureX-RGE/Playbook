@@ -1,0 +1,142 @@
+---
+title: Cards
+description: A comprehensive showcase of the refactored Card component with all available features and variations.
+---
+
+import Card from '/src/components/ui/Card.astro'
+import { CardGrid } from '@astrojs/starlight/components';
+
+The Card component is a versatile container for displaying content with optional icons and badges. This page demonstrates all available features and variations.
+
+*(The following contains AI-generated content.)*
+
+## Basic Card
+
+The simplest card with just a title and content:
+
+<Card title="Simple Card">
+  This is a basic card with just a title and content. No icons or badges.
+</Card>
+
+## Card with Left Icon
+
+Add an icon to the left of the title:
+
+<Card title="With Left Icon" leftIcon="star">
+  This card displays an icon to the left of the title, providing visual emphasis.
+</Card>
+
+## Card with Right Icon
+
+Add an icon to the right of the title:
+
+<Card title="With Right Icon" rightIcon="rocket">
+  This card displays an icon to the right of the title for additional context.
+</Card>
+
+## Card with Both Icons
+
+Combine left and right icons for maximum visual impact:
+
+<Card title="Full Icon Support" leftIcon="star" rightIcon="rocket">
+  This card features both left and right icons, creating a balanced and visually appealing design.
+</Card>
+
+## Card with Title Badge
+
+Display a badge next to the title:
+
+<Card title="Title with Badge" titleBadge={true}>
+  Cards can show badges in the header to indicate status, tags, or categories.
+</Card>
+
+## Card with Content Badge
+
+Display a badge in the card body:
+
+<Card title="Content with Badge" contentBadge={true}>
+  This card demonstrates a badge placed alongside the main content for additional metadata or labels.
+</Card>
+
+## Card with All Features
+
+The ultimate card with icons and badges combined:
+
+<Card 
+  title="Complete Card" 
+  leftIcon="star" 
+  rightIcon="rocket"
+  titleBadge={true}
+  contentBadge={true}
+>
+  This card showcases all available features: both icons, title badge, and content badge. Perfect for complex information presentation.
+</Card>
+
+## Multiple Cards Grid
+
+Cards work great when displayed together:
+
+<CardGrid>
+  <Card title="Feature One" leftIcon="star" titleBadge={true}>
+    Quick feature overview with icon and badge indicator.
+  </Card>
+  
+  <Card title="Feature Two" rightIcon="rocket" contentBadge={true}>
+    Important feature with call-to-action badge in the content area.
+  </Card>
+  
+  <Card title="Feature Three" leftIcon="star" rightIcon="rocket">
+    Advanced feature with symmetrical icon placement for balance.
+  </Card>
+</CardGrid>
+
+## Card Content Variations
+
+Cards support rich markdown content:
+
+<Card title="Rich Content Card" leftIcon="star">
+  You can include **bold text**, *italic text*, and even `code snippets` in card content.
+  
+  - List items
+  - Work perfectly
+  - Inside cards
+</Card>
+
+## Styling and Customization
+
+The Card component features:
+
+- **Responsive padding**: 24px consistent padding for content
+- **Hover effect**: Subtle background color change on hover
+- **Font family**: Uses the Patika font for consistent typography
+- **Rounded corners**: 12px border radius for modern appearance
+- **Accessible colors**: High contrast white text on dark backgrounds
+- **Flexible icons**: Supports any Starlight icon
+
+### Icon Options
+
+Any Starlight icon can be used:
+
+<CardGrid>
+  <Card title="With Star" leftIcon="star">
+    Perfect for highlighting important items.
+  </Card>
+  
+  <Card title="With Rocket" leftIcon="rocket">
+    Great for features and launches.
+  </Card>
+  
+  <Card title="With Translation" leftIcon="translate">
+    Ideal for internationalization.
+  </Card>
+</CardGrid>
+
+## Best Practices
+
+When using the Card component:
+
+1. **Keep titles concise** - Titles are set to ellipsis if they overflow
+2. **Use icons purposefully** - Icons should relate to the card content
+3. **Limit badge usage** - Use badges sparingly for important metadata
+4. **Maintain consistency** - Use the same icon sets across related cards
+5. **Group related cards** - Display similar cards together in a grid layout

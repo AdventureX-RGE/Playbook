@@ -1,0 +1,83 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+import type { StarlightIcon } from "@astrojs/starlight/types";
+
+interface Props {
+  leftIcon?: StarlightIcon;
+  rightIcon?: StarlightIcon;
+  title: string;
+  titleBadge?: boolean;
+  contentBadge?: boolean;
+}
+
+const {
+  leftIcon,
+  rightIcon,
+  title,
+  titleBadge = false,
+  contentBadge = false,
+} = Astro.props;
+---
+
+<article
+  class="flex flex-col gap-3 overflow-hidden min-w-45 rounded-xl
+  border border-(--sl-color-gray-5) bg-[rgba(48,48,52,0.24)]
+  p-6 transition-colors hover:bg-[rgba(48,48,52,0.72)]"
+>
+  <div class="flex items-center justify-between gap-2.5 w-full min-h-8">
+    <div class="flex items-center gap-2.5 min-w-0">
+      {
+        leftIcon && (
+          <Icon
+            name={leftIcon}
+            size="2em"
+            class="flex items-center justify-center shrink-0 w-8 h-8 p-1.5"
+          />
+        )
+      }
+      <h3
+        class="text-[24px] font-bold leading-none m-0 whitespace-nowrap
+        overflow-hidden text-ellipsis flex-1"
+      >
+        {title}
+      </h3>
+    </div>
+    <div class="flex items-center gap-2.5 min-w-0">
+      {
+        titleBadge && (
+          <span
+            class="inline-flex items-center justify-center rounded-md bg-[#606065]
+            px-1 py-0.5 text-[14px] leading-[1.2]"
+          >
+            badges
+          </span>
+        )
+      }
+      {
+        rightIcon && (
+          <Icon
+            name={rightIcon}
+            size="2em"
+            class="flex items-center justify-center shrink-0 w-8 h-8 p-1.5"
+          />
+        )
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-1 w-full">
+    <div class="flex-1 min-w-60 text-[14px]">
+      <slot />
+    </div>
+    {
+      contentBadge && (
+        <span
+          class="inline-flex items-center justify-center rounded-md
+        bg-[#606065] px-1 py-0.5 text-[14px] leading-[1.2]"
+        >
+          badges
+        </span>
+      )
+    }
+  </div>
+</article>
