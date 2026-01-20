@@ -6,7 +6,6 @@ const { sublist } = Astro.props;
   Array.isArray(sublist) &&
     sublist.map((entry) => {
       if (entry.type === "link") {
-        // aria-[current=page]:text-(--color-muted)
         return (
           <a
             href={entry.href}
@@ -23,8 +22,8 @@ const { sublist } = Astro.props;
 
       if (entry.type === "group") {
         return (
-          <div class="flex flex-col gap-2">
-            <div class="px-3 py-1.5 text-[18px] leading-6 font-medium tracking-wider text-(--color-text)">
+          <div class="flex flex-col gap-1">
+            <div class="px-3 py-1.5 text-[18px] leading-6 font-bold tracking-wider text-(--color-text)">
               {entry.label}
             </div>
 
