@@ -1,0 +1,44 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+interface Props {
+  /**
+   * Direction of the chevron arrow.
+   * 'left': Points to the left
+   * 'right': Points to the right
+   */
+  direction: "left" | "right";
+
+  /** Optional class names to append */
+  class?: string;
+}
+
+const { direction, class: className } = Astro.props;
+
+// Determine the icon name based on the direction prop.
+// Starlight provides 'left-caret' and 'right-caret' which match the chevron style.
+const iconName = direction === "left" ? "left-caret" : "right-caret";
+
+// Define the fill color based on the direction requirements.
+// Left: var(--color-primary-white-text, #EEE)
+// Right: var(--color-primary-black-main, #181818)
+const color =
+  direction === "left"
+    ? "var(--color-primary-white-text, #EEE)"
+    : "var(--color-primary-black-main, #181818)";
+---
+
+<!-- 
+  Wrapper span to apply positioning and color.
+  Using inline style for color to support the specific CSS variable fallbacks requested.
+-->
+<span
+  class:list={["inline-flex items-center justify-center", className]}
+  style={{ color }}
+>
+  <!-- 
+    Render the Starlight Icon.
+    Set size to 0.75rem (12px) to approximate the 11px height of the reference SVG.
+  -->
+  <Icon name={iconName} size="0.75rem" />
+</span>

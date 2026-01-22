@@ -1,0 +1,87 @@
+---
+title: Chevron
+description: Documentation for the Chevron component used for directional indicators.
+---
+
+import Chevron from '/src/components/starlight/Chevron.astro';
+import { CardGrid } from '@astrojs/starlight/components';
+
+The Chevron component is a simple navigational icon wrapper that uses Starlight's internal icons but applies specific styling and coloring rules required for our design system. It is primarily designed to be used within buttons or pagination controls.
+
+## Basic Usage
+
+The component accepts a `direction` prop which can be either `'left'` or `'right'`.
+
+### Left Chevron
+
+The left chevron is styled with `var(--color-primary-white-text)` (fallback `#EEE`), making it suitable for dark backgrounds.
+
+<div class="p-4 bg-black rounded-lg w-fit">
+  <Chevron direction="left" />
+</div>
+
+```astro
+<Chevron direction="left" />
+```
+
+### Right Chevron
+
+The right chevron is styled with `var(--color-primary-black-main)` (fallback `#181818`), making it suitable for light backgrounds.
+
+<div class="p-4 bg-white rounded-lg w-fit">
+  <Chevron direction="right" />
+</div>
+
+```astro
+<Chevron direction="right" />
+```
+
+## Usage in Buttons
+
+Chevrons are typically used effectively within button components to indicate navigation direction.
+
+<div class="flex gap-4">
+  {/* Previous Button Simulation */}
+  <button class="flex items-center gap-2 px-4 py-2 bg-[var(--color-accent)] text-white rounded-md">
+    <Chevron direction="left" />
+    <span>Previous</span>
+  </button>
+
+  {/* Next Button Simulation (Light background for visibility of right chevron) */}
+  <button class="flex items-center gap-2 px-4 py-2 bg-gray-200 text-black rounded-md">
+    <span>Next</span>
+    <Chevron direction="right" />
+  </button>
+</div>
+
+```astro
+<button class="...">
+  <Chevron direction="left" />
+  <span>Previous</span>
+</button>
+
+<button class="...">
+  <span>Next</span>
+  <Chevron direction="right" />
+</button>
+```
+
+## Component Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `direction` | `'left' \| 'right'` | Required | Determines the arrow direction and color. |
+| `class` | `string` | `undefined` | Optional CSS classes to apply to the wrapper. |
+
+## Customization
+
+You can pass additional classes to the component to adjust spacing or positioning.
+
+<div class="p-4 border rounded-lg bg-black text-white w-fit">
+  <span class="mr-2">Read more</span>
+  <Chevron direction="left" class="ml-2" />
+</div>
+
+```astro
+<Chevron direction="left" class="ml-2" />
+```
