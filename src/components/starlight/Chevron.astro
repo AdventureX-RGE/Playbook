@@ -1,0 +1,23 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+interface Props {
+  direction?: "left" | "right";
+  theme?: "light" | "dark";
+  class?: string;
+}
+
+const { direction, theme = "light", class: className } = Astro.props;
+const iconName = direction === "left" ? "left-caret" : "right-caret";
+
+// Light: #EEEEEE
+// Dark: #181818
+const color = theme === "light" ? "#EEEEEE" : "#181818";
+---
+
+<span
+  class:list={["inline-flex items-center justify-center", className]}
+  style={{ color }}
+>
+  <Icon name={iconName} size="0.75rem" />
+</span>
