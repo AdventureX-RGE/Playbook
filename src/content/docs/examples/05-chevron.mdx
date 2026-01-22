@@ -9,35 +9,39 @@ The Chevron component is a simple navigational icon wrapper that uses Starlight'
 
 ## Basic Usage
 
-The component accepts a `direction` prop which can be either `'left'` or `'right'`.
+The component accepts a `direction` prop (`'left'` | `'right'`) and an optional `theme` prop (`'light'` | `'dark'`). They are independent: `direction` controls the icon shape, and `theme` controls the color.
 
-### Left Chevron
+### Light Theme (Default)
 
-The left chevron is styled with `var(--color-primary-white-text)` (fallback `#EEE`), making it suitable for dark backgrounds.
+The light theme uses `#EEEEEE`, suitable for dark backgrounds.
 
-<div class="p-4 bg-black rounded-lg w-fit">
-  <Chevron direction="left" />
+<div class="p-4 bg-black rounded-lg w-fit flex gap-4">
+  <Chevron direction="left" theme="light" />
+  <Chevron direction="right" theme="light" />
 </div>
 
 ```astro
-<Chevron direction="left" />
+<Chevron direction="left" theme="light" />
+<Chevron direction="right" theme="light" />
 ```
 
-### Right Chevron
+### Dark Theme
 
-The right chevron is styled with `var(--color-primary-black-main)` (fallback `#181818`), making it suitable for light backgrounds.
+The dark theme uses `#181818`, suitable for light backgrounds.
 
-<div class="p-4 bg-white rounded-lg w-fit">
-  <Chevron direction="right" />
+<div class="p-4 bg-white rounded-lg w-fit flex gap-4">
+  <Chevron direction="left" theme="dark" />
+  <Chevron direction="right" theme="dark" />
 </div>
 
 ```astro
-<Chevron direction="right" />
+<Chevron direction="left" theme="dark" />
+<Chevron direction="right" theme="dark" />
 ```
 
 ## Usage in Buttons
 
-Chevrons are typically used effectively within button components to indicate navigation direction.
+Chevrons are typically used within button components to indicate navigation direction.
 
 <div class="flex gap-4">
   {/* Previous Button Simulation */}
@@ -69,7 +73,8 @@ Chevrons are typically used effectively within button components to indicate nav
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `direction` | `'left' \| 'right'` | Required | Determines the arrow direction and color. |
+| `direction` | `'left' \| 'right'` | `undefined` | Determines the arrow direction. |
+| `theme` | `'light' \| 'dark'` | `'light'` | Determines the color (#EEEEEE or #181818). |
 | `class` | `string` | `undefined` | Optional CSS classes to apply to the wrapper. |
 
 ## Customization
