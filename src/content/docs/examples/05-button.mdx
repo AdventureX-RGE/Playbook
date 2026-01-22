@@ -1,0 +1,46 @@
+---
+title: Button
+description: A showcase of the custom Button component with optional badges and arrow indicators.
+---
+
+import Button from '/src/components/ui/Button.astro';
+
+The Button component is a stylized interactive element featuring custom arrow SVGs on both sides and support for operational status badges.
+
+## Basic Button
+
+A simple button with text content.
+
+<Button text="Default Button" />
+
+## Link Button
+
+If an `href` prop is provided, the component renders as an anchor tag (`<a>`) while maintaining the button styling.
+
+<Button text="Go to Home" href="/" />
+
+## Button with Badge
+
+Buttons can display a badge to indicate status or additional information.
+
+<Button text="New Feature" badge="New" />
+
+## Badge Variants
+
+The badge supports different variants to convey meaning (note, danger, success, caution, tip).
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+  <Button text="Note Badge" badge="Note" badgeVariant="note" />
+  <Button text="Success Badge" badge="Success" badgeVariant="success" />
+  <Button text="Danger Badge" badge="Error" badgeVariant="danger" />
+  <Button text="Caution Badge" badge="Warning" badgeVariant="caution" />
+  <Button text="Tip Badge" badge="Tip" badgeVariant="tip" />
+</div>
+
+## Custom Text via Slot
+
+You can also use the component's slot to pass text or other inline elements.
+
+<Button>
+  Custom <strong>Slot</strong> Content
+</Button>

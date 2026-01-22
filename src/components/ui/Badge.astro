@@ -1,5 +1,14 @@
+---
+interface Props {
+  text?: string;
+  variant?: "note" | "danger" | "success" | "caution" | "tip";
+}
+
+const { text } = Astro.props;
+---
+
 <span
   class="px-1 py-0.5 bg-accent-50 border border-accent-300 text-black rounded-xl leading-4 text-4"
 >
-  Badge
+  {text}
 </span>
