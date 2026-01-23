@@ -1,56 +1,32 @@
 ---
-import Chevron from "./Chevron.astro";
-import Badge from "../ui/Badge.astro";
+import { Icon, Badge } from "@astrojs/starlight/components";
+import type { ComponentProps } from "astro/types";
 
 interface Props {
-  /**
-   * Button text content (Required).
-   */
   text: string;
-
-  /**
-   * Auxiliary text (Optional).
-   */
   auxText?: string;
+  badge?: ComponentProps<typeof Badge>;
 
   /**
-   * Whether to show the badge (Optional).
-   */
-  showBadge?: boolean;
-
-  /**
-   * Whether to show the left chevron (Optional).
+   * Whether to show the chevron (Optional).
    */
   showLeftChevron?: boolean;
-
-  /**
-   * Whether to show the right chevron (Optional).
-   */
   showRightChevron?: boolean;
 
-  /**
-   * Optional URL for navigation. If provided, renders an <a> tag.
-   */
   href?: string;
-
-  /**
-   * Optional class names.
-   */
   class?: string;
 }
 
 const {
   text,
   auxText,
-  showBadge,
+  badge,
   showLeftChevron,
   showRightChevron,
   href,
   class: className,
 } = Astro.props;
 
-// Use <a> tag if href is present, otherwise <button> (or <div> if preferred for non-interactive).
-// Using <button> for semantics if no href.
 const Tag = href ? "a" : "button";
 ---
 
@@ -58,42 +34,32 @@ const Tag = href ? "a" : "button";
   href={href}
   type={href ? undefined : "button"}
   class:list={[
-    // Use flex layout to align items centrally
     "inline-flex items-center justify-center no-underline",
-    // Add default transition for interactive feel
     "transition-opacity hover:opacity-90",
     className,
   ]}
   style={{
-    // Apply layout specifications
     padding:
       "var(--rounding-number-space-compact, 6px) var(--rounding-number-space-x-compact, 8px)",
     gap: "var(--rounding-number-space-compact, 6px)",
 
-    // Apply visual style specifications
     borderRadius: "var(--rounding-number-radius-medium, 12px)",
     border:
       "var(--rounding-number-stroke-light, 0.6px) solid var(--color-primary-orange-main, #F48529)",
     background: "var(--color-primary-orange-bg, rgba(244, 133, 41, 0.24))",
 
-    // Ensure text color contrasts well or follows theme (Setting to the orange main color as default based on border)
     color: "var(--color-primary-orange-main, #F48529)",
   }}
 >
-  {/* 1. Left Chevron (Optional) */}
-  {showLeftChevron && <Chevron direction="left" />}
+  {showLeftChevron && <Icon name="left-caret" size="0.75rem" />}
 
-  {/* 2. Button Text (Required) */}
   <span class="font-medium text-sm leading-none">
     {text}
   </span>
 
-  {/* 3. Auxiliary Text (Optional) */}
   {auxText && <span class="text-xs opacity-80 leading-none">{auxText}</span>}
 
-  {/* 4. Badge (Optional) */}
-  {showBadge && <Badge />}
+  {badge && <Badge {...badge} />}
 
-  {/* 5. Right Chevron (Optional) */}
-  {showRightChevron && <Chevron direction="right" />}
+  {showRightChevron && <Icon name="right-caret" size="0.75rem" />}
 </Tag>
