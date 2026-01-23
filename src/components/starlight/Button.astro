@@ -3,50 +3,50 @@ import Chevron from "./Chevron.astro";
 import Badge from "../ui/Badge.astro";
 
 interface Props {
-  /**
-   * Button text content (Required).
-   */
-  text: string;
+	/**
+	 * Button text content (Required).
+	 */
+	text: string;
 
-  /**
-   * Auxiliary text (Optional).
-   */
-  auxText?: string;
+	/**
+	 * Auxiliary text (Optional).
+	 */
+	auxText?: string;
 
-  /**
-   * Whether to show the badge (Optional).
-   */
-  showBadge?: boolean;
+	/**
+	 * Whether to show the badge (Optional).
+	 */
+	showBadge?: boolean;
 
-  /**
-   * Whether to show the left chevron (Optional).
-   */
-  showLeftChevron?: boolean;
+	/**
+	 * Whether to show the left chevron (Optional).
+	 */
+	showLeftChevron?: boolean;
 
-  /**
-   * Whether to show the right chevron (Optional).
-   */
-  showRightChevron?: boolean;
+	/**
+	 * Whether to show the right chevron (Optional).
+	 */
+	showRightChevron?: boolean;
 
-  /**
-   * Optional URL for navigation. If provided, renders an <a> tag.
-   */
-  href?: string;
+	/**
+	 * Optional URL for navigation. If provided, renders an <a> tag.
+	 */
+	href?: string;
 
-  /**
-   * Optional class names.
-   */
-  class?: string;
+	/**
+	 * Optional class names.
+	 */
+	class?: string;
 }
 
 const {
-  text,
-  auxText,
-  showBadge,
-  showLeftChevron,
-  showRightChevron,
-  href,
-  class: className,
+	text,
+	auxText,
+	showBadge,
+	showLeftChevron,
+	showRightChevron,
+	href,
+	class: className,
 } = Astro.props;
 
 // Use <a> tag if href is present, otherwise <button> (or <div> if preferred for non-interactive).

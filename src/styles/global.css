@@ -17,7 +17,7 @@
   --sl-color-bg-sidebar: var(--color-bg);
   --sl-color-bg-nav: var(--color-bg);
 
-  --sl-font: "Patika", sans-serif;
+  --sl-font: var(--font-patika);
 }
 
 header a {
