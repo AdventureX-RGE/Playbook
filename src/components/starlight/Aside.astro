@@ -1,0 +1,19 @@
+---
+import { Aside as StarlightAside } from "@astrojs/starlight/components";
+import type { ComponentProps } from "astro/types";
+
+type Props = ComponentProps<typeof StarlightAside>;
+
+const props = Astro.props;
+---
+
+<div
+  class="flex w-[520px] max-w-[var(--rounding-number-space-max,600px)]
+  flex-col items-start gap-[var(--rounding-number-space-base,12px)]
+  rounded-[var(--rounding-number-radius-medium,12px)] border border-solid
+  p-[var(--rounding-number-space-base,12px)]"
+>
+  <StarlightAside {...props}>
+    <slot />
+  </StarlightAside>
+</div>
