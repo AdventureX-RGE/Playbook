@@ -1,8 +1,10 @@
 ---
 import Default from "@astrojs/starlight/components/Head.astro";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 ---
 
 <Font cssVariable="--font-patika" preload />
 <Font cssVariable="--font-orbix" />
+<ClientRouter />
 <Default><slot /></Default>
