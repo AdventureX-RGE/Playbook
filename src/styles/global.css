@@ -41,11 +41,6 @@ summary {
   padding: 6px 12px;
 }
 
-.sl-sidebar * {
-  font-weight: 900;
-  background-color: red !important;
-}
-
 a {
   text-decoration: none;
 }
@@ -77,6 +72,46 @@ header {
 
 .right-sidebar {
   border-left: 1px solid var(--color-border);
+}
+
+.right-sidebar-panel {
+  padding: 36px 24px !important;
+}
+
+.right-sidebar-panel h2 {
+  display: none;
+}
+
+.right-sidebar-panel nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.right-sidebar-panel nav a {
+  display: block;
+  padding: 6px 12px;
+  padding-inline-start: calc(12px + (var(--depth, 0) * 12px));
+  color: var(--color-muted);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.right-sidebar-panel nav a[aria-current],
+.right-sidebar-panel nav a[aria-current="true"],
+.right-sidebar-panel nav a[aria-current="location"],
+.right-sidebar-panel nav a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.right-sidebar-panel nav a:hover {
+  color: var(--color-text);
 }
 
 p,
