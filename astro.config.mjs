@@ -11,7 +11,7 @@ export default defineConfig({
 	site: "https://adventure-x.org",
 	integrations: [
 		starlight({
-			title: "OPEN HACKATHON PLAYBOOK",
+			title: "PLAYBOOK",
 			// social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/AdventureX-RGE' }],
 			sidebar: [
 				{
