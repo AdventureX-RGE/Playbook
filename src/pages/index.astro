@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import background from "../assets/images/background.png";
 import Playbook from "../assets/images/playbook.svg";
 import Meteor from "../components/effect/Meteor";
@@ -13,6 +14,7 @@ const title = "Open Hackathon Playbook";
     <meta charset="utf-8" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width" />
+    <ClientRouter />
     <style>
       @import "../styles/global.css";
     </style>
