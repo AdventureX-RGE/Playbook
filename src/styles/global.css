@@ -133,6 +133,17 @@ header {
   gap: 4px;
 }
 
+.right-sidebar-panel nav ul ul {
+  margin: 0;
+  padding: 0;
+  gap: 4px;
+}
+
+.right-sidebar-panel nav li {
+  margin: 0;
+  padding: 0;
+}
+
 .right-sidebar-panel nav a {
   display: block;
   padding: 6px 12px;
