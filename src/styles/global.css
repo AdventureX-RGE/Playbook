@@ -20,6 +20,11 @@
   --sl-font: var(--font-patika), var(--font-ibm-plex-sc);
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.15s;
+}
+
 header a {
   color: var(--color-text);
 }
