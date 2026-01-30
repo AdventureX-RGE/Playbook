@@ -1,0 +1,75 @@
+---
+import { Image } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import background from "../assets/images/background.png";
+import Playbook from "../assets/images/playbook.svg";
+import Meteor from "../components/effect/Meteor";
+import Cursor from "../components/effect/Cursor";
+
+const title = "Open Hackathon Playbook";
+---
+
+<html lang="en" class="h-full w-full bg-black overflow-hidden cursor-none">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width" />
+    <ClientRouter />
+    <style>
+      @import "../styles/global.css";
+    </style>
+  </head>
+  <body
+    class="relative min-h-screen h-full w-full bg-black overflow-hidden cursor-none"
+  >
+    <Cursor client:load />
+    <div class="absolute inset-0 z-1 pointer-events-none">
+      <Meteor
+        client:load
+        color="#a8d4ff"
+        tailColor="#4a90c2"
+        meteorSize={0.018}
+        minMeteorSize={1.2}
+        pixelResolution={400}
+        speed={3.5}
+        density={0.025}
+        direction={210}
+        brightness={0.8}
+        depthFade={15}
+        farPlane={25}
+        gamma={0.5}
+        tailLength={1.0}
+      />
+    </div>
+    <div class="absolute inset-0 z-2 pointer-events-none">
+      <Meteor
+        client:load
+        color="#ffffff"
+        tailColor="#FF7400"
+        meteorSize={0.04}
+        minMeteorSize={2.2}
+        pixelResolution={500}
+        speed={1.8}
+        density={0.03}
+        direction={205}
+        brightness={1.5}
+        depthFade={10}
+        farPlane={16}
+        gamma={0.45}
+        tailLength={1.8}
+      />
+    </div>
+    <Image
+      src={background}
+      alt="Background"
+      class:list={[
+        "absolute bottom-0 left-0 w-full h-1/2 object-cover object-top z-2 pointer-events-none",
+      ]}
+    />
+    <div
+      class="absolute top-0 left-0 w-full h-1/2 flex items-center justify-center z-3 pointer-events-none"
+    >
+      <Playbook class="max-w-[80%] max-h-[60%] w-auto h-auto" />
+    </div>
+  </body>
+</html>

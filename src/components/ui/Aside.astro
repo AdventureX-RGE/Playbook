@@ -1,0 +1,102 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+const asideTypes = {
+	note: {
+		icon: "information",
+		title: "Note",
+		color: "#6899fb",
+		bgColor: "rgba(104, 153, 251, 0.24)",
+	},
+	tip: {
+		icon: "rocket",
+		title: "Tip",
+		color: "#a25af4",
+		bgColor: "rgba(162, 90, 244, 0.24)",
+	},
+	caution: {
+		icon: "warning",
+		title: "Caution",
+		color: "#FF7400",
+		bgColor: "rgba(244, 133, 41, 0.24)",
+	},
+	danger: {
+		icon: "error",
+		title: "Danger",
+		color: "#e64f4f",
+		bgColor: "rgba(230, 79, 79, 0.24)",
+	},
+	success: {
+		icon: "approve-check-circle",
+		title: "Success",
+		color: "#64bf4a",
+		bgColor: "rgba(100, 191, 74, 0.24)",
+	},
+	deprecated: {
+		icon: "warning",
+		title: "Deprecated",
+		color: "#cbb747",
+		bgColor: "rgba(203, 183, 71, 0.24)",
+	},
+	adventurex: {
+		icon: null,
+		title: "AdventureX",
+		color: "var(--color-accent)",
+		bgColor: "rgba(244, 133, 41, 0.24)",
+		iconSvg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			<path d="M12 0L14.59 8.41L23 11L14.59 13.59L12 22L9.41 13.59L1 11L9.41 8.41L12 0Z"/>
+		</svg>`,
+	},
+} as const;
+
+type AsideType = keyof typeof asideTypes;
+
+interface Props {
+	type?: AsideType;
+	title?: string;
+}
+
+const { type = "note", title } = Astro.props;
+
+const config = asideTypes[type] || asideTypes.note;
+const displayTitle = title || config.title;
+const hasIconSvg = "iconSvg" in config && config.iconSvg;
+---
+
+<aside
+	class="px-4 py-3 rounded-xl border flex flex-col overflow-hidden"
+	style={`--aside-color: ${config.color}; border-color: ${config.color}; background-color: ${config.bgColor};`}
+	aria-label={displayTitle}
+>
+	<div class="flex items-center gap-2.5">
+		{
+			hasIconSvg ? (
+				<div
+					class="w-6 h-6 aside-icon"
+					set:html={(config as typeof asideTypes.adventurex).iconSvg}
+				/>
+			) : (
+				config.icon && (
+					<div class="aside-icon">
+						<Icon name={config.icon} size="24px" />
+					</div>
+				)
+			)
+		}
+		<span class="text-xl font-medium leading-normal aside-title">
+			{displayTitle}
+		</span>
+	</div>
+	<div class="text-base font-normal leading-normal text-(--color-text)">
+		<slot />
+	</div>
+</aside>
+
+<style>
+	.aside-icon {
+		color: var(--aside-color);
+	}
+	.aside-title {
+		color: var(--aside-color);
+	}
+</style>
