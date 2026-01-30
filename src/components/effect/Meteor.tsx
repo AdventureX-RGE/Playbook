@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 import {
-	Scene,
-	OrthographicCamera,
-	WebGLRenderer,
-	PlaneGeometry,
-	ShaderMaterial,
-	Mesh,
-	Vector2,
-	Vector3,
-	Vector4,
-	Color,
+  Scene,
+  OrthographicCamera,
+  WebGLRenderer,
+  PlaneGeometry,
+  ShaderMaterial,
+  Mesh,
+  Vector2,
+  Vector3,
+  Vector4,
+  Color,
 } from "three";
 
 const vertexShader = `void main(){gl_Position=vec4(position,1.);}`;
@@ -105,184 +105,184 @@ void main(){
 }`;
 
 interface Props {
-	color?: string;
-	tailColor?: string;
-	meteorSize?: number;
-	minMeteorSize?: number;
-	pixelResolution?: number;
-	speed?: number;
-	depthFade?: number;
-	farPlane?: number;
-	brightness?: number;
-	gamma?: number;
-	density?: number;
-	tailLength?: number;
-	direction?: number;
-	className?: string;
-	style?: React.CSSProperties;
+  color?: string;
+  tailColor?: string;
+  meteorSize?: number;
+  minMeteorSize?: number;
+  pixelResolution?: number;
+  speed?: number;
+  depthFade?: number;
+  farPlane?: number;
+  brightness?: number;
+  gamma?: number;
+  density?: number;
+  tailLength?: number;
+  direction?: number;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 export default function MobaiMeteor({
-	color = "#ffffff",
-	tailColor = "#ff6b35",
-	meteorSize = 0.015,
-	minMeteorSize = 1.5,
-	pixelResolution = 200,
-	speed = 2.5,
-	depthFade = 10,
-	farPlane = 25,
-	brightness = 1.2,
-	gamma = 0.5,
-	density = 0.15,
-	tailLength = 0.8,
-	direction = 225,
-	className = "",
-	style = {},
+  color = "#ffffff",
+  tailColor = "#ff6b35",
+  meteorSize = 0.015,
+  minMeteorSize = 1.5,
+  pixelResolution = 200,
+  speed = 2.5,
+  depthFade = 10,
+  farPlane = 25,
+  brightness = 1.2,
+  gamma = 0.5,
+  density = 0.15,
+  tailLength = 0.8,
+  direction = 225,
+  className = "",
+  style = {},
 }: Props) {
-	const ref = useRef<HTMLDivElement>(null);
-	const state = useRef<{
-		renderer?: WebGLRenderer;
-		material?: ShaderMaterial;
-		raf?: number;
-		time: number;
-		lastFrame: number;
-		visible: boolean;
-	}>({ time: 0, lastFrame: 0, visible: true });
+  const ref = useRef<HTMLDivElement>(null);
+  const state = useRef<{
+    renderer?: WebGLRenderer;
+    material?: ShaderMaterial;
+    raf?: number;
+    time: number;
+    lastFrame: number;
+    visible: boolean;
+  }>({ time: 0, lastFrame: 0, visible: true });
 
-	useEffect(() => {
-		const el = ref.current;
-		if (!el) return;
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
 
-		const s = state.current;
-		const scene = new Scene();
-		const cam = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const s = state.current;
+    const scene = new Scene();
+    const cam = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-		const renderer = new WebGLRenderer({
-			alpha: true,
-			antialias: false,
-			powerPreference: "high-performance",
-			stencil: false,
-			depth: false,
-		});
-		renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-		renderer.setSize(el.offsetWidth, el.offsetHeight);
-		el.appendChild(renderer.domElement);
-		s.renderer = renderer;
+    const renderer = new WebGLRenderer({
+      alpha: true,
+      antialias: false,
+      powerPreference: "high-performance",
+      stencil: false,
+      depth: false,
+    });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    renderer.setSize(el.offsetWidth, el.offsetHeight);
+    el.appendChild(renderer.domElement);
+    s.renderer = renderer;
 
-		const material = new ShaderMaterial({
-			vertexShader,
-			fragmentShader,
-			uniforms: {
-				uTime: { value: 0 },
-				uRes: { value: new Vector2(el.offsetWidth, el.offsetHeight) },
-				uParams: { value: new Vector4() },
-				uParams2: { value: new Vector4() },
-				uParams3: { value: new Vector4() },
-				uColor: { value: new Vector3() },
-				uTailColor: { value: new Vector3() },
-			},
-			transparent: true,
-			depthTest: false,
-			depthWrite: false,
-		});
-		s.material = material;
+    const material = new ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        uTime: { value: 0 },
+        uRes: { value: new Vector2(el.offsetWidth, el.offsetHeight) },
+        uParams: { value: new Vector4() },
+        uParams2: { value: new Vector4() },
+        uParams3: { value: new Vector4() },
+        uColor: { value: new Vector3() },
+        uTailColor: { value: new Vector3() },
+      },
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+    });
+    s.material = material;
 
-		scene.add(new Mesh(new PlaneGeometry(2, 2), material));
+    scene.add(new Mesh(new PlaneGeometry(2, 2), material));
 
-		let resizeTimer: ReturnType<typeof setTimeout>;
-		const ro = new ResizeObserver(([e]) => {
-			clearTimeout(resizeTimer);
-			resizeTimer = setTimeout(() => {
-				const { width: w, height: h } = e.contentRect;
-				if (w > 0 && h > 0) {
-					renderer.setSize(w, h);
-					material.uniforms.uRes.value.set(w, h);
-				}
-			}, 50);
-		});
-		ro.observe(el);
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const ro = new ResizeObserver(([e]) => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const { width: w, height: h } = e.contentRect;
+        if (w > 0 && h > 0) {
+          renderer.setSize(w, h);
+          material.uniforms.uRes.value.set(w, h);
+        }
+      }, 50);
+    });
+    ro.observe(el);
 
-		const io = new IntersectionObserver(
-			([e]) => {
-				s.visible = e.isIntersecting;
-			},
-			{ threshold: 0 },
-		);
-		io.observe(el);
+    const io = new IntersectionObserver(
+      ([e]) => {
+        s.visible = e.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    io.observe(el);
 
-		s.lastFrame = performance.now();
-		const animate = (now: number) => {
-			s.raf = requestAnimationFrame(animate);
-			const dt = Math.min(now - s.lastFrame, 100);
-			s.lastFrame = now;
-			s.time += dt;
-			if (s.visible) {
-				material.uniforms.uTime.value = s.time * 0.001;
-				renderer.render(scene, cam);
-			}
-		};
-		s.raf = requestAnimationFrame(animate);
+    s.lastFrame = performance.now();
+    const animate = (now: number) => {
+      s.raf = requestAnimationFrame(animate);
+      const dt = Math.min(now - s.lastFrame, 100);
+      s.lastFrame = now;
+      s.time += dt;
+      if (s.visible) {
+        material.uniforms.uTime.value = s.time * 0.001;
+        renderer.render(scene, cam);
+      }
+    };
+    s.raf = requestAnimationFrame(animate);
 
-		return () => {
-			if (s.raf) cancelAnimationFrame(s.raf);
-			clearTimeout(resizeTimer);
-			ro.disconnect();
-			io.disconnect();
-			el.removeChild(renderer.domElement);
-			renderer.dispose();
-			material.dispose();
-		};
-	}, []);
+    return () => {
+      if (s.raf) cancelAnimationFrame(s.raf);
+      clearTimeout(resizeTimer);
+      ro.disconnect();
+      io.disconnect();
+      el.removeChild(renderer.domElement);
+      renderer.dispose();
+      material.dispose();
+    };
+  }, []);
 
-	useEffect(() => {
-		const m = state.current.material;
-		if (!m) return;
+  useEffect(() => {
+    const m = state.current.material;
+    if (!m) return;
 
-		const rad = (direction * Math.PI) / 180;
-		const c = new Color(color);
-		const tc = new Color(tailColor);
+    const rad = (direction * Math.PI) / 180;
+    const c = new Color(color);
+    const tc = new Color(tailColor);
 
-		(m.uniforms.uParams.value as Vector4).set(
-			meteorSize,
-			minMeteorSize,
-			pixelResolution,
-			speed,
-		);
-		(m.uniforms.uParams2.value as Vector4).set(
-			depthFade,
-			farPlane,
-			brightness,
-			gamma,
-		);
-		(m.uniforms.uParams3.value as Vector4).set(
-			density,
-			tailLength,
-			Math.sin(rad),
-			Math.cos(rad),
-		);
-		(m.uniforms.uColor.value as Vector3).set(c.r, c.g, c.b);
-		(m.uniforms.uTailColor.value as Vector3).set(tc.r, tc.g, tc.b);
-	}, [
-		color,
-		tailColor,
-		meteorSize,
-		minMeteorSize,
-		pixelResolution,
-		speed,
-		depthFade,
-		farPlane,
-		brightness,
-		gamma,
-		density,
-		tailLength,
-		direction,
-	]);
+    (m.uniforms.uParams.value as Vector4).set(
+      meteorSize,
+      minMeteorSize,
+      pixelResolution,
+      speed,
+    );
+    (m.uniforms.uParams2.value as Vector4).set(
+      depthFade,
+      farPlane,
+      brightness,
+      gamma,
+    );
+    (m.uniforms.uParams3.value as Vector4).set(
+      density,
+      tailLength,
+      Math.sin(rad),
+      Math.cos(rad),
+    );
+    (m.uniforms.uColor.value as Vector3).set(c.r, c.g, c.b);
+    (m.uniforms.uTailColor.value as Vector3).set(tc.r, tc.g, tc.b);
+  }, [
+    color,
+    tailColor,
+    meteorSize,
+    minMeteorSize,
+    pixelResolution,
+    speed,
+    depthFade,
+    farPlane,
+    brightness,
+    gamma,
+    density,
+    tailLength,
+    direction,
+  ]);
 
-	return (
-		<div
-			ref={ref}
-			className={className}
-			style={{ position: "absolute", inset: 0, contain: "strict", ...style }}
-		/>
-	);
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{ position: "absolute", inset: 0, contain: "strict", ...style }}
+    />
+  );
 }
