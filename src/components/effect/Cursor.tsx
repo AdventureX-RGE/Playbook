@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { navigate } from "astro:transitions/client";
 
 const styles = `
 .cursor-pixel-core{position:fixed;top:0;left:0;width:4px;height:4px;background:#f48529;pointer-events:none;z-index:10001;will-change:transform}
