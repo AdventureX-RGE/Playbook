@@ -11,7 +11,7 @@ export default defineConfig({
 	site: "https://adventure-x.org",
 	integrations: [
 		starlight({
-			title: "OPEN HACKATHON PLAYBOOK",
+			title: "PLAYBOOK",
 			// social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/AdventureX-RGE' }],
 			sidebar: [
 				{
@@ -88,6 +88,41 @@ export default defineConfig({
 							weight: 400,
 							style: "normal",
 							src: ["./src/assets/fonts/orbix-regular.woff2"],
+						},
+					],
+				},
+			},
+			{
+				provider: fontProviders.local(),
+				name: "IBM Plex Sans SC",
+				cssVariable: "--font-ibm-plex-sc",
+				fallbacks: ["system-ui", "sans-serif"],
+				options: {
+					variants: [
+						{
+							weight: 300,
+							style: "normal",
+							src: ["./src/assets/fonts/ibm-plex-300.woff2"],
+						},
+						{
+							weight: 400,
+							style: "normal",
+							src: ["./src/assets/fonts/ibm-plex-400.woff2"],
+						},
+						{
+							weight: 500,
+							style: "normal",
+							src: ["./src/assets/fonts/ibm-plex-500.woff2"],
+						},
+						{
+							weight: 600,
+							style: "normal",
+							src: ["./src/assets/fonts/ibm-plex-600.woff2"],
+						},
+						{
+							weight: 700,
+							style: "normal",
+							src: ["./src/assets/fonts/ibm-plex-700.woff2"],
 						},
 					],
 				},
