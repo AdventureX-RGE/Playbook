@@ -7,7 +7,14 @@ const { prev, next } = pagination ?? {};
 
 {
   (prev || next) && (
-    <nav class="flex flex-row justify-between">
+    <nav
+      class:list={[
+        "flex flex-row gap-4",
+        prev && next && "justify-between",
+        !prev && next && "justify-end",
+        prev && !next && "justify-start",
+      ]}
+    >
       {prev && (
         <a href={prev.href} rel="prev" class="text-(--color-text) w-60">
           <div class="p-3 border border-(--color-border) rounded-xl flex flex-row items-center gap-1.5">
@@ -23,8 +30,8 @@ const { prev, next } = pagination ?? {};
       )}
 
       {next && (
-        <a href={next.href} rel="prev" class="text-(--color-text) w-60">
-          <div class="p-3 border border-(--color-border) rounded-xl flex flex-row-reverse items-center justify-center gap-1.5">
+        <a href={next.href} rel="next" class="text-(--color-text) w-60">
+          <div class="p-3 border border-(--color-border) rounded-xl flex flex-row-reverse items-center gap-1.5">
             <Icon name="right-caret" label="Next Page" size="24px" />
             <div class="flex-1 flex flex-col text-right">
               <span class="text-[14px] leading-5">Next</span>
