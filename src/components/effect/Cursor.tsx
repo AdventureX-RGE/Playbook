@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { navigate } from "astro:transitions/client";
 
 const styles = `
 .cursor-pixel-core{position:fixed;top:0;left:0;width:4px;height:4px;background:#f48529;pointer-events:none;z-index:10001;will-change:transform}
@@ -101,7 +102,7 @@ export default function MobaiCursor() {
 			if (r.glow) r.glow.style.opacity = "0";
 			spawn();
 			setTimeout(() => {
-				location.href = "/start_here/01-getting-started/";
+				navigate("/start_here/01");
 			}, 900);
 		};
 
