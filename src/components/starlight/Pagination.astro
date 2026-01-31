@@ -7,10 +7,10 @@ const { prev, next } = pagination ?? {};
 
 {
   (prev || next) && (
-    <nav class="flex flex-row justify-between">
+    <nav class="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-stretch">
       {prev && (
-        <a href={prev.href} rel="prev" class="text-(--color-text) w-80">
-          <div class="p-3 border border-(--color-border) rounded-xl flex flex-row items-center gap-1.5">
+        <a href={prev.href} rel="prev" class="text-(--color-text) flex-1 sm:max-w-80">
+          <div class="h-full p-3 border border-(--color-border) rounded-xl flex flex-row items-center gap-1.5">
             <Icon name="left-caret" label="Previous Page" size="24px" />
             <div class="flex-1 flex flex-col">
               <span class="text-[14px] leading-5">Previous</span>
@@ -23,8 +23,8 @@ const { prev, next } = pagination ?? {};
       )}
 
       {next && (
-        <a href={next.href} rel="prev" class="text-(--color-text) w-80">
-          <div class="p-3 border border-(--color-border) rounded-xl flex flex-row-reverse items-center justify-center gap-1.5">
+        <a href={next.href} rel="next" class="text-(--color-text) flex-1 sm:max-w-80">
+          <div class="h-full p-3 border border-(--color-border) rounded-xl flex flex-row-reverse items-center justify-center gap-1.5">
             <Icon name="right-caret" label="Next Page" size="24px" />
             <div class="flex-1 flex flex-col text-right">
               <span class="text-[14px] leading-5">Next</span>
