@@ -2,10 +2,38 @@
 import Default from "@astrojs/starlight/components/Head.astro";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+
+const canonical = Astro.url.href;
 ---
 
 <Font cssVariable="--font-patika" preload />
 <Font cssVariable="--font-orbix" preload />
-<Font cssVariable="--font-ibm-plex-sc" />
+<Font cssVariable="--font-ibm-plex-sc" preload />
+
+<meta property="og:title" content="Open Hackathon Playbook - AdventureX" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://playbook.adventure-x.org/" />
+
+<meta
+  name="description"
+  content="An open-source playbook documenting how AdventureX builds world-class hackathons by and for young creators."
+/>
+
+<meta
+  name="description"
+  lang="zh-CN"
+  content="AdventureX 的开源行动手册，记录年轻创造者如何从零构建并运营一场世界级黑客松。"
+/>
+
+<meta
+  property="og:description"
+  content="A fully open-sourced playbook for building world-class hackathons by young creators."
+/>
+
+<link rel="canonical" href={canonical} />
+
 <ClientRouter />
-<Default><slot /></Default>
+
+<Default>
+  <slot />
+</Default>
