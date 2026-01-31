@@ -8,44 +8,53 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://adventure-x.org",
-	integrations: [
-		starlight({
-			title: "PLAYBOOK",
-			// social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/AdventureX-RGE' }],
-			sidebar: [
-				{
-					label: "Start",
-					autogenerate: { directory: "start" },
-				},
-				{
-					label: "Mid",
-					autogenerate: { directory: "mid" },
-				},
-				{
-					label: "Later",
-					autogenerate: { directory: "later" },
-				},
-				{
-					label: "Offline",
-					autogenerate: { directory: "offline" },
-				},
-				// {
-				// 	label: "Examples",
-				// 	autogenerate: { directory: "examples" },
-				// }
-			],
-			customCss: ["./src/styles/global.css"],
-			components: {
-				Sidebar: "./src/components/starlight/Sidebar.astro",
-				Header: "./src/components/starlight/Header.astro",
-				ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
-				Pagination: "./src/components/starlight/Pagination.astro",
-				Head: "./src/components/starlight/Head.astro",
-			},
-		}),
-		react(),
-	],
+  site: "https://adventure-x.org",
+
+  prefetch: {
+    defaultStrategy: "viewport",
+  },
+
+  server: {
+    allowedHosts: ["playbook.adventure-x.org"],
+  },
+
+  integrations: [
+    starlight({
+      title: "PLAYBOOK",
+      // social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/AdventureX-RGE' }],
+      sidebar: [
+        {
+          label: "Start",
+          autogenerate: { directory: "start" },
+        },
+        {
+          label: "Mid",
+          autogenerate: { directory: "mid" },
+        },
+        {
+          label: "Later",
+          autogenerate: { directory: "later" },
+        },
+        {
+          label: "Offline",
+          autogenerate: { directory: "offline" },
+        },
+        // {
+        // 	label: "Examples",
+        // 	autogenerate: { directory: "examples" },
+        // }
+      ],
+      customCss: ["./src/styles/global.css"],
+      components: {
+        Sidebar: "./src/components/starlight/Sidebar.astro",
+        Header: "./src/components/starlight/Header.astro",
+        ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
+        Pagination: "./src/components/starlight/Pagination.astro",
+        Head: "./src/components/starlight/Head.astro",
+      },
+    }),
+    react(),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
