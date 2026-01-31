@@ -91,7 +91,7 @@ header {
 }
 
 #starlight__on-this-page--mobile {
-  padding: 12px 24px;
+  padding: 14px 16px 12px;
   font-size: 18px;
   font-weight: 500;
   color: var(--color-text);
@@ -100,7 +100,7 @@ header {
 #starlight__mobile-toc .dropdown {
   background-color: var(--color-bg);
   border: none;
-  padding: 12px 24px;
+  padding: 12px 16px;
 }
 
 #starlight__mobile-toc ul a {
@@ -122,6 +122,10 @@ header {
 
 .right-sidebar-panel {
   padding: 36px 24px !important;
+}
+
+.right-sidebar-panel nav {
+  margin-top: 12px;
 }
 
 .right-sidebar-panel nav ul {
@@ -229,7 +233,13 @@ p + p {
 }
 
 .main-pane {
-  padding: 24px 36px;
+  padding: 24px 16px;
+}
+
+@media (min-width: 50em) {
+  .main-pane {
+    padding: 24px 36px;
+  }
 }
 
 .sl-heading-wrapper {
