@@ -30,10 +30,10 @@ export default defineConfig({
 					label: "Offline",
 					autogenerate: { directory: "offline" },
 				},
-				{
-					label: "Examples",
-					autogenerate: { directory: "examples" },
-				}
+				// {
+				// 	label: "Examples",
+				// 	autogenerate: { directory: "examples" },
+				// }
 			],
 			customCss: ["./src/styles/global.css"],
 			components: {
