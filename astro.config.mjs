@@ -14,10 +14,6 @@ export default defineConfig({
     defaultStrategy: "viewport",
   },
 
-  server: {
-    allowedHosts: ["playbook.adventure-x.org"],
-  },
-
   integrations: [
     starlight({
       title: "PLAYBOOK",
