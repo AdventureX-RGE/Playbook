@@ -16,6 +16,7 @@
   --sl-color-bg: var(--color-bg);
   --sl-color-bg-sidebar: var(--color-bg);
   --sl-color-bg-nav: var(--color-bg);
+  --sl-sidebar-width: 22rem;
 
   --sl-font: var(--font-patika), var(--font-ibm-plex-sc);
 }
