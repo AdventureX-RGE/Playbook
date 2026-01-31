@@ -18,6 +18,7 @@
   --sl-color-bg-nav: var(--color-bg);
 
   --sl-font: var(--font-patika), var(--font-ibm-plex-sc);
+  --font-orbix: 'Orbix', system-ui, sans-serif;
 }
 
 header a {
