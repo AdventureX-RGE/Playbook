@@ -69,7 +69,7 @@ export default defineConfig({
         provider: fontProviders.local(),
         name: "Patika",
         cssVariable: "--font-patika",
-        fallbacks: ["IBM Plex Sans SC", "system-ui", "sans-serif"],
+        fallbacks: [],
         options: {
           variants: [
             {
