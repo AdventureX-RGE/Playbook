@@ -12,9 +12,10 @@ const { prev, next } = pagination ?? {};
         <a href={prev.href} rel="prev" class:list={["text-(--color-text) flex-1", { "sm:max-w-80": prev && next }]}>
           <div class="h-full p-3 border border-(--color-border) rounded-xl flex flex-row items-center gap-1.5">
             <Icon name="left-caret" label="Previous Page" size="24px" />
+
             <div class="flex-1 flex flex-col">
-              <span class="text-[14px] leading-5">Previous</span>
-              <span class="text-[18px] leading-6 font-medium">
+              <span class="text-[14px] leading-5 opacity-70">Previous</span>
+              <span class="text-[18px] leading-6 font-medium truncate">
                 {prev.label}
               </span>
             </div>
@@ -26,9 +27,10 @@ const { prev, next } = pagination ?? {};
         <a href={next.href} rel="next" class:list={["text-(--color-text) flex-1", { "sm:max-w-80": prev && next }]}>
           <div class="h-full p-3 border border-(--color-border) rounded-xl flex flex-row-reverse items-center justify-center gap-1.5">
             <Icon name="right-caret" label="Next Page" size="24px" />
+
             <div class="flex-1 flex flex-col text-right">
-              <span class="text-[14px] leading-5">Next</span>
-              <span class="text-[18px] leading-6 font-medium">
+              <span class="text-[14px] leading-5 opacity-70">Next</span>
+              <span class="text-[18px] leading-6 font-medium truncate">
                 {next.label}
               </span>
             </div>

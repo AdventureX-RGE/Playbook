@@ -19,6 +19,7 @@
   --sl-sidebar-width: 22rem;
 
   --sl-font: var(--font-patika), var(--font-ibm-plex-sc);
+  --font-orbix: 'Orbix', system-ui, sans-serif;
 }
 
 ::view-transition-old(root),
