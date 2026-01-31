@@ -36,8 +36,8 @@ export default defineConfig({
           autogenerate: { directory: "later" },
         },
         {
-          label: "Offline",
-          autogenerate: { directory: "offline" },
+          label: "On-Site",
+          autogenerate: { directory: "onsite" },
         },
         // {
         // 	label: "Examples",
