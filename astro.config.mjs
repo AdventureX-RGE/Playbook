@@ -58,6 +58,9 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      allowedHosts: ["playbook.adventure-x.org"],
+    },
   },
 
   experimental: {
