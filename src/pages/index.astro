@@ -19,7 +19,9 @@ const title = "Open Hackathon Playbook";
       @import "../styles/global.css";
     </style>
   </head>
-  <body class="relative min-h-screen h-full w-full bg-black overflow-hidden cursor-none">
+  <body
+    class="relative min-h-screen h-full w-full bg-black overflow-hidden cursor-none"
+  >
     <Cursor client:load />
     <div class="absolute inset-0 z-1 pointer-events-none">
       <Meteor
@@ -60,9 +62,13 @@ const title = "Open Hackathon Playbook";
     <Image
       src={background}
       alt="Background"
-      class:list={["absolute bottom-0 left-0 w-full h-1/2 object-cover object-top z-2 pointer-events-none"]}
+      class:list={[
+        "absolute bottom-0 left-0 w-full h-1/2 object-cover object-top z-2 pointer-events-none",
+      ]}
     />
-    <div class="absolute top-0 left-0 w-full h-1/2 flex items-center justify-center z-3 pointer-events-none">
+    <div
+      class="absolute top-0 left-0 w-full h-1/2 flex items-center justify-center z-3 pointer-events-none"
+    >
       <Playbook class="max-w-[80%] max-h-[60%] w-auto h-auto" />
     </div>
   </body>
