@@ -16,9 +16,15 @@
   --sl-color-bg: var(--color-bg);
   --sl-color-bg-sidebar: var(--color-bg);
   --sl-color-bg-nav: var(--color-bg);
+  --sl-sidebar-width: 22rem;
 
   --sl-font: var(--font-patika), var(--font-ibm-plex-sc);
   --font-orbix: 'Orbix', system-ui, sans-serif;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.15s;
 }
 
 header a {
@@ -87,7 +93,7 @@ header {
 }
 
 #starlight__on-this-page--mobile {
-  padding: 12px 24px;
+  padding: 14px 16px 12px;
   font-size: 18px;
   font-weight: 500;
   color: var(--color-text);
@@ -96,7 +102,7 @@ header {
 #starlight__mobile-toc .dropdown {
   background-color: var(--color-bg);
   border: none;
-  padding: 12px 24px;
+  padding: 12px 16px;
 }
 
 #starlight__mobile-toc ul a {
@@ -120,6 +126,10 @@ header {
   padding: 36px 24px !important;
 }
 
+.right-sidebar-panel nav {
+  margin-top: 12px;
+}
+
 .right-sidebar-panel nav ul {
   margin: 0;
   padding: 0;
@@ -127,6 +137,17 @@ header {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.right-sidebar-panel nav ul ul {
+  margin: 0;
+  padding: 0;
+  gap: 4px;
+}
+
+.right-sidebar-panel nav li {
+  margin: 0;
+  padding: 0;
 }
 
 .right-sidebar-panel nav a {
@@ -157,53 +178,75 @@ li {
   color: var(--color-text);
 }
 
+li {
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 0.4em;
+}
+
+ul,
+ol {
+  margin: 0.8em 0;
+}
+
 h1 {
   font-weight: 700;
   font-size: 32px;
-  line-height: 120%;
+  line-height: 1.5;
 }
 
 h2 {
   font-weight: 700;
   font-size: 28px;
-  line-height: 120%;
+  line-height: 1.5;
 }
 
 h3 {
   font-weight: 700;
   font-size: 24px;
-  line-height: 120%;
+  line-height: 1.5;
 }
 
 h4 {
   font-weight: 500;
   font-size: 24px;
-  line-height: 120%;
+  line-height: 1.5;
 }
 
 h5 {
   font-weight: 500;
   font-size: 20px;
-  line-height: 150%;
+  line-height: 1.5;
 }
 
 h6 {
   font-weight: 500;
   font-size: 18px;
-  line-height: 150%;
+  line-height: 1.5;
 }
 
 p {
-  font-size: 16px;
-  line-height: 150%;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+p + p {
+  margin-top: 1em;
 }
 
 .main-pane {
-  padding: 20px 36px;
+  padding: 24px 16px;
+}
+
+@media (min-width: 50em) {
+  .main-pane {
+    padding: 24px 36px;
+  }
 }
 
 .sl-heading-wrapper {
-  margin-top: 24px;
+  margin-top: 32px;
+  margin-bottom: 16px;
 }
 
 .content-panel {

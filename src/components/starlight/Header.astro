@@ -1,19 +1,16 @@
 ---
-import Search from "./Search.astro";
 const { siteTitle } = Astro.locals.starlightRoute;
 ---
 
 <div
-  class="w-full px-6 flex justify-between items-center h-15 bg-[#0E0E0E] border-b border-(--color-border)"
+  class="w-full px-4 flex justify-between items-center h-15 bg-[#0E0E0E] border-b border-(--color-border)"
 >
   <a href="/">
     <h1
-      class="font-normal! text-(--color-text) h-6 text-[18px]! leading-6!"
-      style="font-family: var(--font-orbix), serif;"
+      class="font-normal! h-6 text-[18px]! leading-6! font-(family-name:--font-orbix)"
+      style="color: var(--color-text, #f2f2f2);"
     >
       <span class="text-orange-500 mr-1">/</span>{siteTitle}
     </h1>
   </a>
-
-  <Search />
 </div>

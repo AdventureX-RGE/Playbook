@@ -93,18 +93,18 @@ export default function MobaiCursor() {
       }
     };
 
-    const click = () => {
-      if (r.active) return;
-      r.active = true;
-      r.t = 0;
-      canvas.classList.add("active");
-      if (r.core) r.core.style.opacity = "0";
-      if (r.glow) r.glow.style.opacity = "0";
-      spawn();
-      setTimeout(() => {
-        location.href = "/start_here/01-getting-started/";
-      }, 900);
-    };
+		const click = () => {
+			if (r.active) return;
+			r.active = true;
+			r.t = 0;
+			canvas.classList.add("active");
+			if (r.core) r.core.style.opacity = "0";
+			if (r.glow) r.glow.style.opacity = "0";
+			spawn();
+			setTimeout(() => {
+				navigate("/start/01-preface/");
+			}, 900);
+		};
 
     const area = document.querySelector(".click-area");
     if (!area) return;
