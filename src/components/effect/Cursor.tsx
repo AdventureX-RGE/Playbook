@@ -102,7 +102,7 @@ export default function MobaiCursor() {
 			if (r.glow) r.glow.style.opacity = "0";
 			spawn();
 			setTimeout(() => {
-				navigate("/start_here/01");
+				navigate("/start/01-preface/");
 			}, 900);
 		};
 
