@@ -9,6 +9,9 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   site: "https://adventure-x.org",
+  prefetch: {
+    defaultStrategy: "viewport",
+  },
   integrations: [
     starlight({
       title: "PLAYBOOK",
