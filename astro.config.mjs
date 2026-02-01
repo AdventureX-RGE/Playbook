@@ -57,6 +57,9 @@ export default defineConfig({
     server: {
       allowedHosts: ["playbook.adventure-x.org"],
     },
+    preview: {
+      allowedHosts: ["playbook.adventure-x.org"],
+    },
   },
 
   experimental: {
