@@ -32,7 +32,7 @@ export default defineConfig({
           autogenerate: { directory: "later" },
         },
         {
-          label: "Onsite",
+          label: "On-Site",
           autogenerate: { directory: "onsite" },
         },
         // {
@@ -65,7 +65,7 @@ export default defineConfig({
         provider: fontProviders.local(),
         name: "Patika",
         cssVariable: "--font-patika",
-        fallbacks: ["system-ui", "sans-serif"],
+        fallbacks: [],
         options: {
           variants: [
             {

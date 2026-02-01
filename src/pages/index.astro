@@ -14,6 +14,17 @@ const title = "Open Hackathon Playbook";
     <meta charset="utf-8" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://playbook.adventure-x.org/" />
+    <meta
+      name="description"
+      content="An open-source playbook documenting how AdventureX builds world-class hackathons by and for young creators."
+    />
+    <meta
+      name="description"
+      lang="zh-CN"
+      content="AdventureX 的开源行动手册，记录年轻创造者如何从零构建并运营一场世界级黑客松。"
+    />
     <ClientRouter />
     <style>
       @import "../styles/global.css";
@@ -70,6 +81,38 @@ const title = "Open Hackathon Playbook";
       class="absolute top-0 left-0 w-full h-1/2 flex items-center justify-center z-3 pointer-events-none"
     >
       <Playbook class="max-w-[80%] max-h-[60%] w-auto h-auto" />
+
+      <section
+        class="sr-only"
+        aria-label="Open Hackathon Playbook SEO description"
+      >
+        <h1>Open Hackathon Playbook – AdventureX</h1>
+
+        <p lang="zh-CN">
+          Open Hackathon Playbook 是 AdventureX
+          的开源行动手册，系统记录我们如何从零构建并运营一场属于年轻创造者的世界级黑客松。
+        </p>
+
+        <p lang="en">
+          Open Hackathon Playbook is an open-source guide documenting how
+          AdventureX is built and operated by young creators, from first
+          principles to execution.
+        </p>
+
+        <p lang="zh-CN">
+          本手册覆盖理念与方法论、组织架构、赞助与合作、场地与物资、内容与日程、志愿者与选手体验、风险与应急，以及每一次复盘中沉淀下来的可复制细节。
+        </p>
+
+        <p lang="en">
+          It covers philosophy, organization, partnerships, logistics,
+          programming, participant experience, risk management, and the
+          operational details that make a world-class hackathon possible—even
+          under tight constraints.
+        </p>
+
+        <a href="/start/" lang="en">Start reading the Playbook</a>
+        <a href="/start/" lang="zh-CN">从这里开始阅读</a>
+      </section>
     </div>
   </body>
 </html>
