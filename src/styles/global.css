@@ -70,10 +70,16 @@ header {
 #starlight__sidebar {
   padding: 0;
   border-right: 1px solid var(--color-border);
+  overflow: hidden;
 }
 
 .sidebar-content {
   padding: 0;
+}
+
+.sidebar-content nav {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sl-color-bg-nav) transparent;
 }
 
 .right-sidebar {
