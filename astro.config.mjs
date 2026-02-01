@@ -14,6 +14,14 @@ export default defineConfig({
     defaultStrategy: "viewport",
   },
 
+  server: {
+    allowedHosts: [".adventure-x.org"],
+  },
+
+  preview: {
+    allowedHosts: [".adventure-x.org"],
+  },
+
   integrations: [
     starlight({
       title: "PLAYBOOK",
@@ -54,12 +62,6 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-    server: {
-      allowedHosts: ["playbook.adventure-x.org"],
-    },
-    preview: {
-      allowedHosts: ["playbook.adventure-x.org"],
-    },
   },
 
   experimental: {
