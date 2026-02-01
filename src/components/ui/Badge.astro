@@ -1,5 +1,180 @@
+---
+interface Props {
+  text?: string;
+  value?: "default" | "new" | "demo" | "number" | "deprecated" | "experimental";
+  type?: "default" | "no-stroke" | "aside";
+  state?: "default" | "hover" | "focus";
+  interactive?: boolean;
+  variant?: Props["value"];
+  filled?: boolean;
+}
+
+const {
+  text,
+  value,
+  variant,
+  type = "default",
+  state: forcedState,
+  interactive = false,
+  filled = false,
+} = Astro.props;
+
+const resolvedValue = value ?? variant ?? "default";
+const resolvedState: Props["state"] = forcedState ?? (filled ? "hover" : "default");
+
+const TOKENS = {
+  grayText: "#6d6d73",
+  whiteText: "#eeeeee",
+
+  grayStroke: "#47474c",
+  grayBg: "#6060653d",
+  grayFill: "#606065",
+
+  purple: "#a25af4",
+  purpleBg: "#a25af43d",
+
+  blue: "#6899fb",
+  blueBg: "#6899fb3d",
+
+  green: "#64bf4a",
+  greenBg: "#64bf4a3d",
+
+  yellow: "#cbb747",
+  yellowBg: "#cbb7473d",
+
+  red: "#e64f4f",
+  redBg: "#e64f4f3d",
+
+  focusBg: "#f2f2f23d",
+} as const;
+
+const VALUE_MAP: Record<
+  NonNullable<Props["value"]>,
+  { text: string; stroke: string; bg: string; fill: string }
+> = {
+  default: {
+    text: TOKENS.grayText,
+    stroke: TOKENS.grayStroke,
+    bg: TOKENS.grayBg,
+    fill: TOKENS.grayFill,
+  },
+  new: {
+    text: TOKENS.purple,
+    stroke: TOKENS.purple,
+    bg: TOKENS.purpleBg,
+    fill: TOKENS.purple,
+  },
+  demo: {
+    text: TOKENS.blue,
+    stroke: TOKENS.blue,
+    bg: TOKENS.blueBg,
+    fill: TOKENS.blue,
+  },
+  number: {
+    text: TOKENS.green,
+    stroke: TOKENS.green,
+    bg: TOKENS.greenBg,
+    fill: TOKENS.green,
+  },
+  deprecated: {
+    text: TOKENS.yellow,
+    stroke: TOKENS.yellow,
+    bg: TOKENS.yellowBg,
+    fill: TOKENS.yellow,
+  },
+  experimental: {
+    text: TOKENS.red,
+    stroke: TOKENS.red,
+    bg: TOKENS.redBg,
+    fill: TOKENS.red,
+  },
+};
+
+const v = VALUE_MAP[resolvedValue];
+
+const isFilled = resolvedState === "hover";
+const isFocused = resolvedState === "focus";
+---
+
 <span
-  class="px-1 py-0.5 bg-accent-50 border border-accent-300 text-black rounded-xl leading-4 text-4"
+  class="ax-badge"
+  data-type={type}
+  data-value={resolvedValue}
+  data-interactive={interactive ? "true" : undefined}
+  data-state={resolvedState}
+  style={[
+    `--ax-badge-text: ${v.text}`,
+    `--ax-badge-stroke: ${v.stroke}`,
+    `--ax-badge-bg: ${v.bg}`,
+    `--ax-badge-fill: ${v.fill}`,
+    `--ax-badge-white-text: ${TOKENS.whiteText}`,
+    `--ax-badge-focus-bg: ${TOKENS.focusBg}`,
+    isFilled ? `--ax-badge-force-filled: 1` : ``,
+    isFocused ? `--ax-badge-force-focus: 1` : ``,
+  ]
+    .filter(Boolean)
+    .join("; ")}
 >
-  Badge
+  {text ? text : <slot />}
 </span>
+
+<style>
+  .ax-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+
+    height: 23px;
+    padding: 2px var(--rounding-number-space-compact, 6px);
+    border-radius: var(--rounding-number-radius-small, 6px);
+
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 400;
+
+    border: var(--rounding-number-stroke-regular, 1px) solid var(--ax-badge-stroke);
+    background: var(--ax-badge-bg);
+    color: var(--ax-badge-text);
+  }
+
+  .ax-badge[data-type="no-stroke"],
+  .ax-badge[data-type="aside"] {
+    border: none;
+  }
+
+  .ax-badge[data-state="hover"],
+  .ax-badge[style*="--ax-badge-force-filled: 1"] {
+    background: var(--ax-badge-fill);
+    border-color: var(--ax-badge-fill);
+    color: var(--ax-badge-white-text);
+  }
+
+  .ax-badge[data-state="focus"],
+  .ax-badge[style*="--ax-badge-force-focus: 1"] {
+    background: var(--ax-badge-focus-bg);
+    outline: var(--rounding-number-stroke-thin, 0.4px) solid var(--ax-badge-stroke);
+    outline-offset: 1px;
+  }
+
+  .ax-badge[data-interactive="true"] {
+    cursor: default;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease,
+      border-color 120ms ease,
+      outline-color 120ms ease;
+  }
+
+  .ax-badge[data-interactive="true"]:hover {
+    background: var(--ax-badge-fill);
+    border-color: var(--ax-badge-fill);
+    color: var(--ax-badge-white-text);
+  }
+
+  .ax-badge[data-interactive="true"]:focus-visible {
+    background: var(--ax-badge-focus-bg);
+    outline: var(--rounding-number-stroke-thin, 0.4px) solid var(--ax-badge-stroke);
+    outline-offset: 1px;
+  }
+</style>
