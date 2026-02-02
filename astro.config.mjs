@@ -19,10 +19,6 @@ export default defineConfig({
     allowedHosts: [".adventure-x.org"],
   },
 
-  preview: {
-    allowedHosts: [".adventure-x.org"],
-  },
-
   integrations: [
     sitemap(),
 
