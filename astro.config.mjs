@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 import starlight from "@astrojs/starlight";
+import sitemap from "@astrojs/sitemap";
 
 import tailwindcss from "@tailwindcss/vite";
 
@@ -23,6 +24,8 @@ export default defineConfig({
   },
 
   integrations: [
+    sitemap(),
+
     starlight({
       title: "PLAYBOOK",
       favicon: "/favicon.svg",
