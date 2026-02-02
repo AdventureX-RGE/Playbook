@@ -1,0 +1,118 @@
+<starlight-menu-button class="print:hidden">
+  <button
+    aria-expanded="false"
+    aria-label="Menu"
+    aria-controls="starlight__sidebar"
+    class="sl-flex md:sl-hidden"
+  >
+    <svg 
+      width="18" 
+      height="14" 
+      viewBox="0 0 18 14" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      class="menu-icon"
+    >
+      <rect class="bar top-bar" x="1" y="0" width="16" height="2" rx="1" transform="skewX(-8)" />
+      <rect class="bar mid-bar" x="1" y="6" width="16" height="2" rx="1" transform="skewX(-8)" />
+      <rect class="bar bot-bar" x="1" y="12" width="16" height="2" rx="1" transform="skewX(-8)" />
+    </svg>
+  </button>
+</starlight-menu-button>
+
+<script>
+  class StarlightMenuButton extends HTMLElement {
+    btn = this.querySelector('button')!;
+
+    constructor() {
+      super();
+      this.btn.addEventListener('click', () => this.toggleExpanded());
+
+      const parentNav = this.closest('nav');
+      if (parentNav) {
+        parentNav.addEventListener('keyup', (e) => this.closeOnEscape(e));
+      }
+    }
+
+    setExpanded(expanded: boolean) {
+      this.setAttribute('aria-expanded', String(expanded));
+      document.body.toggleAttribute('data-mobile-menu-expanded', expanded);
+    }
+
+    toggleExpanded() {
+      this.setExpanded(this.getAttribute('aria-expanded') !== 'true');
+    }
+
+    closeOnEscape(e: KeyboardEvent) {
+      if (e.code === 'Escape') {
+        this.setExpanded(false);
+        this.btn.focus();
+      }
+    }
+  }
+
+  customElements.define('starlight-menu-button', StarlightMenuButton);
+</script>
+
+<style>
+  @layer starlight.core {
+    button {
+      position: fixed;
+      top: calc((var(--sl-nav-height) - var(--sl-menu-button-size)) / 2);
+      inset-inline-end: var(--sl-nav-pad-x);
+      z-index: var(--sl-z-index-navbar);
+      border: 0;
+      border-radius: 4px;
+      width: var(--sl-menu-button-size);
+      height: var(--sl-menu-button-size);
+      padding: 0.5rem;
+      background-color: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bar {
+      fill: var(--color-accent, #F48529);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .top-bar {
+      transform-origin: center center;
+    }
+    .bot-bar {
+      transform-origin: center center;
+    }
+
+    [aria-expanded='true'] button .top-bar {
+      transform: translateY(6px) rotate(45deg) skewX(0);
+    }
+    [aria-expanded='true'] button .mid-bar {
+      opacity: 0;
+      transform: translateX(6px) skewX(0);
+    }
+    [aria-expanded='true'] button .bot-bar {
+      transform: translateY(-6px) rotate(-45deg) skewX(0);
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--color-accent, #F48529);
+      outline-offset: 2px;
+    }
+  }
+</style>
+
+<style is:global>
+  @layer starlight.core {
+    [data-mobile-menu-expanded] {
+      overflow: hidden;
+    }
+
+    @media (min-width: 50rem) {
+      [data-mobile-menu-expanded] {
+        overflow: auto;
+      }
+    }
+  }
+</style>

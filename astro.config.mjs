@@ -56,6 +56,7 @@ export default defineConfig({
         ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
         Pagination: "./src/components/starlight/Pagination.astro",
         Head: "./src/components/starlight/Head.astro",
+        MobileMenuToggle: "./src/components/starlight/MobileMenuToggle.astro",
       },
     }),
     react(),
