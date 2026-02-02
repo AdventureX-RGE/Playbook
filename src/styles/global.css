@@ -98,7 +98,9 @@ header {
 }
 
 #starlight__on-this-page--mobile {
-  padding: 14px 16px 12px;
+  display: flex;
+  align-items: center;
+  padding: 16px 16px 12px;
   font-size: 18px;
   font-weight: 500;
   color: var(--color-text);
