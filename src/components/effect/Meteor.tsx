@@ -18,31 +18,35 @@ const fragmentShader = /* glsl */ `
 precision highp float;
 uniform float uTime;
 uniform vec2 uRes;
-uniform vec4 uParams;  // meteorSize, minSize, pixelRes, speed
-uniform vec4 uParams2; // depthFade, farPlane, brightness, gamma
-uniform vec4 uParams3; // density, tailLength, dirSin, dirCos
+uniform vec4 uParams;
+uniform vec4 uParams2;
+uniform vec4 uParams3;
 uniform vec3 uColor;
 uniform vec3 uTailColor;
 
-#define hash(n) (n*(n^(n>>15)))
-uvec3 hash3(uint n){return hash(n)*uvec3(1U,511U,262143U);}
+uvec3 hash3(uvec3 p) {
+  p = p * uvec3(0x456789abu, 0x6789ab45u, 0x89ab4567u);
+  p.x += p.y * p.z;
+  p.y += p.z * p.x;
+  p.z += p.x * p.y;
+  p ^= p >> 16u;
+  p.x += p.y * p.z;
+  p.y += p.z * p.x;
+  p.z += p.x * p.y;
+  return p;
+}
 
 const vec3 cK=vec3(.577,.577,.577),cI=vec3(.707,0.,-.707),cJ=vec3(-.408,.816,-.408);
 
-// Box distance for square meteor shape
-vec2 boxMeteor(vec2 p, float tl) {
-  float headW = 0.15, tailW = 0.08;
-  // Head: square box
-  float headD = max(abs(p.x), abs(p.y)) - headW;
-  // Tail position along length
-  float tt = clamp(p.x / tl, 0.0, 1.0);
-  // Tail width narrows toward end
-  float tw = tailW * (1.0 - tt * 0.8);
-  // Tail: rectangular box distance
-  float tailD = max(p.x < 0.0 ? 1e9 : (p.x > tl ? p.x - tl : 0.0), abs(p.y) - tw);
-  // Return (distance, tail_position)
-  float inTail = step(0.0, p.x) * step(p.x, tl);
-  return vec2(mix(headD, min(headD, tailD), inTail), tt * inTail);
+vec2 boxMeteor(vec2 p, float tl, float invTl) {
+  float ay = abs(p.y);
+  float headD = max(abs(p.x), ay) - 0.15;
+  float t = clamp(p.x * invTl, 0.0, 1.0);
+  float tw = 0.08 - t * 0.064;
+  float insideX = step(0.0, p.x) * step(p.x, tl);
+  float tailD = ay - tw;
+  float d = mix(headD, min(headD, max(0.0, tailD)), insideX);
+  return vec2(d, t * insideX);
 }
 
 void main(){
@@ -61,16 +65,18 @@ void main(){
   ph=mix(st-ph,ph,sg);
   
   float rk=1./dot(ray,cK),idf=1./uParams2.x,hr=.5/r.x,tlm=uParams3.y*10.;
+  float density=uParams3.x;
+  float invTlm=1./tlm;
   
   for(int i=0;i<64;i++){
     float t=dot(pos-camP,cK);
     if(t>=uParams2.y)break;
     
     vec3 fp=floor(pos);
-    uvec3 h=hash3(uvec3(fp).x*1597334677U^uvec3(fp).y*3812015801U^uvec3(fp).z*3299493293U);
-    vec3 hf=vec3(h)*2.3283064e-10;
+    uvec3 h=hash3(uvec3(ivec3(fp)));
+    vec3 hf=vec3(h)*(1./4294967296.);
     
-    if(hf.x<uParams3.x){
+    if(hf.x<density){
       vec3 mp=hf*.6+.2+fp;
       float ti=dot(mp-pos,cK)*rk;
       if(ti>0.){
@@ -78,15 +84,9 @@ void main(){
         float tx=dot(tp,cI),ty=dot(tp,cJ);
         float dp=dot(mp-camP,cK);
         float sz=max(uParams.x,uParams.y*dp*hr),isz=1./sz;
-        
-        // Rotate and scale coordinates
         vec2 rp=vec2(c*tx+s*ty,-s*tx+c*ty)*isz;
-        float tl=tlm*sz*isz;
-        
-        // Square meteor distance
-        vec2 md=boxMeteor(rp,tl);
+        vec2 md=boxMeteor(rp,tlm,invTlm);
         float d=md.x,tt=md.y;
-        
         if(d<0.5){
           float sr=uParams.x*isz;
           float I=exp2(-(t+ti)*idf)*min(1.,sr*sr)*uParams2.z*(1.-tt*.9);
