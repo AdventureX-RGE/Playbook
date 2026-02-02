@@ -71,7 +71,7 @@ export default defineConfig({
         provider: fontProviders.local(),
         name: "Patika",
         cssVariable: "--font-patika",
-        fallbacks: [],
+        fallbacks: ["system-ui", "sans-serif"],
         options: {
           variants: [
             {
