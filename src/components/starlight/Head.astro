@@ -6,9 +6,23 @@ import { ClientRouter } from "astro:transitions";
 const canonical = Astro.url.href;
 ---
 
-<Font cssVariable="--font-patika" preload />
+<Font
+  cssVariable="--font-patika"
+  preload={[
+    { weight: 400, style: "normal" },
+    { weight: 500, style: "normal" },
+    { weight: 700, style: "normal" },
+  ]}
+/>
+<Font
+  cssVariable="--font-ibm-plex-sc"
+  preload={[
+    { weight: 400, style: "normal" },
+    { weight: 500, style: "normal" },
+    { weight: 700, style: "normal" },
+  ]}
+/>
 <Font cssVariable="--font-orbix" preload />
-<Font cssVariable="--font-ibm-plex-sc" preload />
 
 <meta property="og:title" content="Open Hackathon Playbook - AdventureX" />
 <meta property="og:type" content="website" />
