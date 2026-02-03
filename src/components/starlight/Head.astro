@@ -2,6 +2,7 @@
 import Default from "@astrojs/starlight/components/Head.astro";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import GtmAstro from "../../components/GtmAstro.astro";
 
 const canonical = Astro.url.href;
 ---
@@ -45,6 +46,8 @@ const canonical = Astro.url.href;
 />
 
 <link rel="canonical" href={canonical} />
+
+<GtmAstro />
 
 <ClientRouter />
 

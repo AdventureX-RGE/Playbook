@@ -2,6 +2,7 @@
 import { defineConfig, fontProviders } from "astro/config";
 import starlight from "@astrojs/starlight";
 import sitemap from "@astrojs/sitemap";
+import partytown from "@astrojs/partytown";
 
 import tailwindcss from "@tailwindcss/vite";
 
@@ -20,7 +21,36 @@ export default defineConfig({
   },
 
   integrations: [
+    react(),
     sitemap(),
+    partytown({
+      config: {
+        debug: false,
+        logCalls: false,
+        logGetters: false,
+        logSetters: false,
+        logImageRequests: false,
+        logScriptExecution: false,
+        logStackTraces: false,
+        forward: [["dataLayer.push"]],
+        resolveUrl: (url) => {
+          const siteUrl = "https://playbook.adventure-x.org/";
+          const proxyUrl = new URL(siteUrl);
+          if (
+            url.hostname === "googleads.g.doubleclick.net" ||
+            url.hostname === "www.googleadservices.com" ||
+            url.hostname === "googletagmanager.com" ||
+            url.hostname === "www.googletagmanager.com" ||
+            url.hostname === "region1.google-analytics.com" ||
+            url.hostname === "google.com"
+          ) {
+            proxyUrl.searchParams.append("apiurl", url.href);
+            return proxyUrl;
+          }
+          return url;
+        },
+      },
+    }),
 
     starlight({
       title: "PLAYBOOK",
@@ -58,7 +88,6 @@ export default defineConfig({
         MobileMenuToggle: "./src/components/starlight/MobileMenuToggle.astro",
       },
     }),
-    react(),
   ],
 
   vite: {
