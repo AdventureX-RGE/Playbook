@@ -78,11 +78,6 @@ header {
   padding: 0;
 }
 
-.sidebar-content nav {
-  scrollbar-width: thin;
-  scrollbar-color: var(--sl-color-bg-nav) transparent;
-}
-
 .right-sidebar {
   border-left: none;
 }
@@ -294,22 +289,6 @@ body.is-editing header > div {
   padding-inline: 1rem;
 }
 
-.edit-overlay {
-  position: fixed;
-  top: 3.75rem;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  display: flex;
-  background-color: var(--color-bg);
-  animation: edit-enter 0.3s ease;
-}
-
-.edit-overlay.is-closing {
-  animation: edit-exit 0.25s ease forwards;
-}
-
 @keyframes edit-enter {
   from {
     opacity: 0;
@@ -330,61 +309,6 @@ body.is-editing header > div {
     opacity: 0;
     transform: translateY(12px);
   }
-}
-
-.edit-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.edit-divider {
-  width: 1px;
-  flex-shrink: 0;
-  background-color: var(--color-border);
-}
-
-.edit-panel-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-muted);
-  font-size: 13px;
-  font-weight: 500;
-  flex-shrink: 0;
-}
-
-.edit-panel-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 28px 36px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
-}
-
-.novel-editor-wrapper {
-  height: 100%;
-}
-
-.edit-panel-body--code {
-  padding: 0 !important;
-}
-
-.novel-editor-content {
-  outline: none;
-  min-height: 100%;
-  color: var(--color-text);
-}
-
-.novel-editor-code {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
-  font-size: 14px;
-  line-height: 1.6;
 }
 
 .novel-editor-code pre {
@@ -425,24 +349,4 @@ body.is-editing header > div {
 
 .novel-editor-code .ProseMirror {
   caret-color: var(--color-accent);
-}
-
-@media (max-width: 768px) {
-  .edit-overlay {
-    flex-direction: column;
-  }
-
-  .edit-divider {
-    width: auto;
-    height: 1px;
-  }
-
-  .edit-panel {
-    flex: none;
-    height: 50%;
-  }
-
-  .edit-panel-body {
-    padding: 16px;
-  }
 }

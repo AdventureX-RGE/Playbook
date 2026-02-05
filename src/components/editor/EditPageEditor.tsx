@@ -191,31 +191,39 @@ export default function EditPageEditor({ source }: EditPageEditorProps) {
   if (!isEditing) return null;
 
   return createPortal(
-    <div ref={overlayRef} className={`edit-overlay${isClosing ? " is-closing" : ""}`}>
-      <div className="edit-panel edit-preview">
-        <div className="edit-panel-bar">
+    <div
+      ref={overlayRef}
+      className={`fixed top-15 inset-x-0 bottom-0 z-100 flex flex-col md:flex-row bg-(--color-bg) ${
+        isClosing
+          ? "animate-[edit-exit_0.25s_ease_forwards]"
+          : "animate-[edit-enter_0.3s_ease]"
+      }`}
+    >
+      <div className="flex-none h-1/2 md:flex-1 md:h-auto flex flex-col min-w-0 overflow-hidden">
+        <div className="flex items-center justify-between py-2.5 px-5 border-b border-(--color-border) text-(--color-muted) text-[13px] font-medium shrink-0">
           <span>预览</span>
         </div>
-        <div className="edit-panel-body">
+        <div className="flex-1 overflow-y-auto p-4 md:py-7 md:px-9 [scrollbar-width:thin] [scrollbar-color:var(--color-border)_transparent]">
           <div ref={previewRef} className="sl-markdown-content" />
         </div>
       </div>
 
-      <div className="edit-divider" />
+      <div className="h-px md:h-auto md:w-px shrink-0 bg-(--color-border)" />
 
-      <div className="edit-panel edit-editor">
-        <div className="edit-panel-bar">
+      <div className="flex-none h-1/2 md:flex-1 md:h-auto flex flex-col min-w-0 overflow-hidden">
+        <div className="flex items-center justify-between py-2.5 px-5 border-b border-(--color-border) text-(--color-muted) text-[13px] font-medium shrink-0">
           <span>编辑</span>
         </div>
-        <div className="edit-panel-body edit-panel-body--code">
+        <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--color-border)_transparent]">
           <EditorRoot>
             <EditorContent
               extensions={extensions}
               initialContent={initialContent.current}
-              className="novel-editor-wrapper"
+              className="h-full"
               editorProps={{
                 attributes: {
-                  class: "novel-editor-content novel-editor-code",
+                  class:
+                    "novel-editor-code outline-none min-h-full text-(--color-text) font-mono text-sm leading-[1.6]",
                   spellcheck: "false",
                 },
               }}

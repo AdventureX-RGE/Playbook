@@ -29,13 +29,18 @@ const hasSource = pageSource.length > 0;
   </a>
   {
     hasSource && (
-      <button id="edit-page-btn" class="edit-page-btn" title="编辑此页">
+      <button
+        id="edit-page-btn"
+        class="flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg bg-transparent text-(--color-muted) border border-(--color-border) cursor-pointer text-[13px] font-medium transition-all duration-150 font-[inherit] leading-none hover:text-(--color-text) hover:border-(--color-text) hover:bg-white/4 active:scale-[0.97] max-[49.99rem]:mr-11"
+        title="编辑此页"
+      >
         <svg
           width="16"
           height="16"
           viewBox="0 0 16 16"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          class="block shrink-0"
         >
           <path
             d="M11.333 1.333a1.886 1.886 0 0 1 2.667 0l.667.667a1.886 1.886 0 0 1 0 2.667L5.333 14H2v-3.333l9.333-9.334ZM10 2.667l3.333 3.333"
@@ -45,7 +50,7 @@ const hasSource = pageSource.length > 0;
             stroke-linejoin="round"
           />
         </svg>
-        <span>编辑此页</span>
+        <span class="leading-none">编辑此页</span>
       </button>
     )
   }
@@ -88,51 +93,9 @@ const hasSource = pageSource.length > 0;
   document.addEventListener("astro:page-load", initEditButton);
 </script>
 
-<style>
-  .edit-page-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    height: 32px;
-    padding: 0 12px;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--color-muted);
-    border: 1px solid var(--color-border);
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.15s ease;
-    font-family: inherit;
-    line-height: 1;
-  }
-
-  .edit-page-btn svg {
-    display: block;
-    flex-shrink: 0;
-  }
-
-  .edit-page-btn span {
-    line-height: 1;
-  }
-
-  .edit-page-btn:hover {
-    color: var(--color-text);
-    border-color: var(--color-text);
-    background: rgba(255, 255, 255, 0.04);
-  }
-
-  .edit-page-btn:active {
-    transform: scale(0.97);
-  }
-
+<style is:global>
   @media (max-width: 49.99rem) {
-    .edit-page-btn {
-      margin-right: 2.75rem;
-    }
-
-    :global(body.is-editing) .edit-page-btn {
+    body.is-editing #edit-page-btn {
       margin-right: 0;
     }
   }

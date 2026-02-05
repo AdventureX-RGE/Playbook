@@ -18,8 +18,8 @@ const displayTitle = title || config.title;
 	aria-label={displayTitle}
 >
 	<div class="flex items-center gap-2.5">
-		<div class="w-6 h-6 aside-icon" set:html={config.iconSvg} />
-		<span class="text-xl font-medium leading-normal aside-title">
+		<div class="w-6 h-6 text-(--aside-color)" set:html={config.iconSvg} />
+		<span class="text-xl font-medium leading-normal text-(--aside-color)">
 			{displayTitle}
 		</span>
 	</div>
@@ -27,12 +27,3 @@ const displayTitle = title || config.title;
 		<slot />
 	</div>
 </aside>
-
-<style>
-	.aside-icon {
-		color: var(--aside-color);
-	}
-	.aside-title {
-		color: var(--aside-color);
-	}
-</style>

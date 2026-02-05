@@ -4,7 +4,7 @@ import SidebarSublist from "./SidebarSublist.astro";
 const { sidebar } = Astro.locals.starlightRoute;
 ---
 
-<nav class="h-full overflow-y-auto">
+<nav class="h-full overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--sl-color-bg-nav)_transparent]">
   <div class="flex flex-col gap-7.5 py-9 px-6">
     <SidebarSublist sublist={sidebar} />
   </div>
