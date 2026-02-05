@@ -18,6 +18,7 @@
   --sl-color-bg-nav: var(--color-bg);
   --sl-sidebar-width: 22rem;
 
+  --sl-nav-height: 3.75rem;
   --sl-font: var(--font-patika), var(--font-ibm-plex-sc);
 }
 
@@ -91,10 +92,18 @@ header {
   display: none;
 }
 
+mobile-starlight-toc nav {
+  border-top: none !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
 #starlight__mobile-toc {
   background-color: var(--color-bg);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  border: none !important;
+}
+
+#starlight__mobile-toc summary {
+  border: none !important;
 }
 
 #starlight__on-this-page--mobile {
@@ -108,7 +117,7 @@ header {
 
 #starlight__mobile-toc .dropdown {
   background-color: var(--color-bg);
-  border: none;
+  border: none !important;
   padding: 12px 16px;
 }
 
