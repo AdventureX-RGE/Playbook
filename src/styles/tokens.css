@@ -1,0 +1,15 @@
+:root {
+  --color-bg: #0a0a0a;
+  --color-white: #f2f2f2;
+  --color-muted: #7b7b80;
+  --color-accent: #f48529;
+  --color-border: #29292c;
+  --color-text: var(--color-white);
+
+  --sl-color-bg: var(--color-bg);
+  --sl-color-bg-sidebar: var(--color-bg);
+  --sl-color-bg-nav: var(--color-bg);
+  --sl-sidebar-width: 22rem;
+  --sl-nav-height: 3.75rem;
+  --sl-font: var(--font-patika), var(--font-ibm-plex-sc);
+}
