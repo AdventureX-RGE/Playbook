@@ -25,13 +25,6 @@ export default defineConfig({
     sitemap(),
     partytown({
       config: {
-        debug: false,
-        logCalls: false,
-        logGetters: false,
-        logSetters: false,
-        logImageRequests: false,
-        logScriptExecution: false,
-        logStackTraces: false,
         forward: [["dataLayer.push"]],
         resolveUrl: (url) => {
           const siteUrl = "https://playbook.adventure-x.org/";
