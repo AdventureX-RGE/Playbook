@@ -1,0 +1,36 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+---
+
+{/* This is intentionally inlined to avoid FOUC. */}
+<script is:inline>
+  window.StarlightThemeProvider = (() => {
+    const storedTheme = "dark";
+    const theme = "dark";
+    document.documentElement.dataset.theme = theme;
+    return {
+      updatePickers() {
+        document
+          .querySelectorAll("starlight-theme-select")
+          .forEach((picker) => {
+            const select = picker.querySelector("select");
+            if (select) select.value = "dark";
+            const tmpl = document.querySelector(`#theme-icons`);
+            const newIcon = tmpl && tmpl.content.querySelector(".dark");
+            if (newIcon) {
+              const oldIcon = picker.querySelector("svg.label-icon");
+              if (oldIcon) {
+                oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+              }
+            }
+          });
+      },
+    };
+  })();
+</script>
+
+<template id="theme-icons">
+  <Icon name="sun" class="light" />
+  <Icon name="moon" class="dark" />
+  <Icon name="laptop" class="auto" />
+</template>
