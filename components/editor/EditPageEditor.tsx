@@ -41,7 +41,7 @@ function renderAsideHtml(config: AsideConfig, title: string, body: string): stri
     `<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">`,
     `${icon}<span style="color:${config.color};font-weight:500;font-size:18px">${title}</span>`,
     `</div>`,
-    `<div>${body.trim()}</div>`,
+    `<div style="color:var(--color-text)">${body.trim()}</div>`,
     `</aside>`,
   ].join("");
 }
