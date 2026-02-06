@@ -27,7 +27,7 @@ const hasSource = pageSource.length > 0;
   <a href="/" class="flex items-center">
     <PlaybookLogo height={15} />
   </a>
-  {
+  <!-- {
     hasSource && (
       <button
         id="edit-page-btn"
@@ -53,10 +53,10 @@ const hasSource = pageSource.length > 0;
         <span class="leading-none">编辑此页</span>
       </button>
     )
-  }
+  } -->
 </div>
 
-{hasSource && <EditPageEditor client:only="react" source={pageSource} />}
+<!-- {hasSource && <EditPageEditor client:only="react" source={pageSource} />}
 
 <script>
   const closeIcon = "M4 4L12 12M4 12L12 4";
@@ -90,7 +90,7 @@ const hasSource = pageSource.length > 0;
     });
   }
 
-  document.addEventListener("astro:page-load", initEditButton);
+  initEditButton();
 </script>
 
 <style is:global>
@@ -99,4 +99,4 @@ const hasSource = pageSource.length > 0;
       margin-right: 0;
     }
   }
-</style>
+</style> -->
