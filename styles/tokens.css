@@ -6,6 +6,8 @@
   --color-border: #29292c;
   --color-text: var(--color-white);
 
+  --sl-color-white: var(--color-white);
+  --sl-color-black: var(--color-bg);
   --sl-color-bg: var(--color-bg);
   --sl-color-bg-sidebar: var(--color-bg);
   --sl-color-bg-nav: var(--color-bg);
