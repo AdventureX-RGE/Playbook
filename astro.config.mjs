@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import awsAmplify from 'astro-aws-amplify';
 import starlight from "@astrojs/starlight";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
@@ -12,11 +13,12 @@ import react from "@astrojs/react";
 export default defineConfig({
   srcDir: ".",
   site: "https://adventure-x.org",
+  output: "server",
+  adapter: awsAmplify(),
 
   prefetch: {
     defaultStrategy: "viewport",
   },
-
   server: {
     allowedHosts: [".adventure-x.org"],
   },
