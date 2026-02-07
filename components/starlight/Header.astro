@@ -1,0 +1,163 @@
+---
+import PlaybookLogo from "../../assets/images/logo/playbook.svg";
+import EditPageEditor from "../editor/EditPageEditor";
+
+const rawFiles = import.meta.glob("/content/docs/**/*.mdx", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+const pathname = Astro.url.pathname.replace(/^\/|\/$/g, "");
+let pageSource = "";
+let pageFilePath = "";
+for (const [path, content] of Object.entries(rawFiles)) {
+  const frontmatter = content.match(/^---\n([\s\S]*?)\n---/);
+  const slug = frontmatter?.[1].match(/slug:\s*(.+)/)?.[1]?.trim();
+  if (slug === pathname) {
+    pageSource = content;
+    pageFilePath = path.replace(/^\//, "");
+    break;
+  }
+}
+const hasSource = pageSource.length > 0;
+---
+
+<div
+  class="w-full px-4 md:px-8 flex justify-between items-center h-15 bg-[#0E0E0E] border-b border-(--color-border)"
+>
+  <a href="/" class="flex items-center">
+    <PlaybookLogo height={15} />
+  </a>
+  {
+    hasSource && (
+      <div id="header-actions" class="flex items-center gap-2 max-[49.99rem]:mr-11">
+        <button
+          id="submit-github-btn"
+          class="flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg bg-transparent text-(--color-muted) border border-(--color-border) cursor-pointer text-[13px] font-medium font-[inherit] leading-none hover:text-(--color-text) hover:border-(--color-text) hover:bg-white/4 active:scale-[0.97] opacity-0 pointer-events-none transition-all duration-200"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="block shrink-0">
+            <path
+              d="M8 1v9m0 0L5 7m3 3l3-3M3 13h10"
+              stroke="currentColor"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="leading-none">提交到 GitHub</span>
+        </button>
+        <button
+          id="edit-page-btn"
+          class="flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg bg-transparent text-(--color-muted) border border-(--color-border) cursor-pointer text-[13px] font-medium transition-all duration-150 font-[inherit] leading-none hover:text-(--color-text) hover:border-(--color-text) hover:bg-white/4 active:scale-[0.97]"
+          title="编辑此页"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="block shrink-0"
+          >
+            <path
+              d="M11.333 1.333a1.886 1.886 0 0 1 2.667 0l.667.667a1.886 1.886 0 0 1 0 2.667L5.333 14H2v-3.333l9.333-9.334ZM10 2.667l3.333 3.333"
+              stroke="currentColor"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="leading-none">编辑此页</span>
+        </button>
+      </div>
+    )
+  }
+</div>
+
+{hasSource && <EditPageEditor client:only="react" source={pageSource} filePath={pageFilePath} />}
+
+<script>
+  import { $isEditing, $isDirty, $submitRequested, $submitStatus, $submitMessage } from "../../stores/editor";
+
+  const closeIcon = "M4 4L12 12M4 12L12 4";
+  const editIcon =
+    "M11.333 1.333a1.886 1.886 0 0 1 2.667 0l.667.667a1.886 1.886 0 0 1 0 2.667L5.333 14H2v-3.333l9.333-9.334ZM10 2.667l3.333 3.333";
+
+  function init() {
+    const editBtn = document.getElementById("edit-page-btn");
+    const submitBtn = document.getElementById("submit-github-btn");
+    if (!editBtn) return;
+
+    const editIcon_ = editBtn.querySelector("svg")!;
+    const editLabel = editBtn.querySelector("span")!;
+    const submitLabel = submitBtn?.querySelector("span");
+
+    document.body.classList.remove("is-editing");
+
+    $isEditing.subscribe((editing) => {
+      editLabel.textContent = editing ? "退出编辑" : "编辑此页";
+      editIcon_.querySelector("path")!.setAttribute("d", editing ? closeIcon : editIcon);
+
+      if (editing) {
+        $submitStatus.set("idle");
+        $submitMessage.set("");
+      }
+    });
+
+    function updateSubmitVisibility() {
+      if (!submitBtn) return;
+      const status = $submitStatus.get();
+      const show = $isEditing.get() && ($isDirty.get() || status === "success" || status === "error");
+      const disabled = !show || status === "submitting";
+      submitBtn.classList.toggle("opacity-0", !show);
+      submitBtn.classList.toggle("pointer-events-none", disabled);
+    }
+
+    $isDirty.subscribe(updateSubmitVisibility);
+    $isEditing.subscribe(updateSubmitVisibility);
+    $submitStatus.subscribe(updateSubmitVisibility);
+
+    $submitStatus.subscribe((status) => {
+      if (!submitBtn || !submitLabel) return;
+      const msg = $submitMessage.get();
+
+      submitBtn.classList.remove("text-green-400", "text-red-400", "border-green-400/40", "border-red-400/40");
+
+      if (status === "submitting") {
+        submitLabel.textContent = "提交中…";
+        submitBtn.onclick = null;
+      } else if (status === "success") {
+        submitLabel.textContent = "PR 已创建";
+        submitBtn.classList.add("text-green-400", "border-green-400/40");
+        submitBtn.onclick = () => window.open(msg, "_blank", "noopener");
+      } else if (status === "error") {
+        submitLabel.textContent = msg || "提交失败";
+        submitBtn.classList.add("text-red-400", "border-red-400/40");
+        submitBtn.onclick = () => $submitRequested.set(true);
+      } else {
+        submitLabel.textContent = "提交到 GitHub";
+        submitBtn.onclick = () => $submitRequested.set(true);
+      }
+
+      updateSubmitVisibility();
+    });
+
+    editBtn.addEventListener("click", () => {
+      $isEditing.set(!$isEditing.get());
+    });
+  }
+
+  init();
+</script>
+
+<style is:global>
+  #header-actions {
+    transition: margin-right 0.25s ease;
+  }
+  @media (max-width: 49.99rem) {
+    body.is-editing #header-actions {
+      margin-right: 0;
+    }
+  }
+</style>

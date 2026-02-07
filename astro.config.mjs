@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import awsAmplify from 'astro-aws-amplify';
 import starlight from "@astrojs/starlight";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
@@ -10,12 +11,14 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
+  srcDir: ".",
   site: "https://adventure-x.org",
+  output: "server",
+  adapter: awsAmplify(),
 
   prefetch: {
     defaultStrategy: "viewport",
   },
-
   server: {
     allowedHosts: [".adventure-x.org"],
   },
@@ -71,15 +74,15 @@ export default defineConfig({
         // 	autogenerate: { directory: "examples" },
         // }
       ],
-      customCss: ["./src/styles/global.css"],
+      customCss: ["./styles/global.css"],
       components: {
-        Sidebar: "./src/components/starlight/Sidebar.astro",
-        Header: "./src/components/starlight/Header.astro",
-        ThemeProvider: "./src/components/starlight/ThemeProvider.astro",
-        ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
-        Pagination: "./src/components/starlight/Pagination.astro",
-        Head: "./src/components/starlight/Head.astro",
-        MobileMenuToggle: "./src/components/starlight/MobileMenuToggle.astro",
+        Sidebar: "./components/starlight/Sidebar.astro",
+        Header: "./components/starlight/Header.astro",
+        ThemeProvider: "./components/starlight/ThemeProvider.astro",
+        ThemeSelect: "./components/starlight/ThemeSelect.astro",
+        Pagination: "./components/starlight/Pagination.astro",
+        Head: "./components/starlight/Head.astro",
+        MobileMenuToggle: "./components/starlight/MobileMenuToggle.astro",
       },
     }),
   ],
@@ -100,27 +103,27 @@ export default defineConfig({
             {
               weight: 300,
               style: "normal",
-              src: ["./src/assets/fonts/patika-300.woff2"],
+              src: ["./assets/fonts/patika-300.woff2"],
             },
             {
               weight: 400,
               style: "normal",
-              src: ["./src/assets/fonts/patika-400.woff2"],
+              src: ["./assets/fonts/patika-400.woff2"],
             },
             {
               weight: 500,
               style: "normal",
-              src: ["./src/assets/fonts/patika-500.woff2"],
+              src: ["./assets/fonts/patika-500.woff2"],
             },
             {
               weight: 600,
               style: "normal",
-              src: ["./src/assets/fonts/patika-600.woff2"],
+              src: ["./assets/fonts/patika-600.woff2"],
             },
             {
               weight: 700,
               style: "normal",
-              src: ["./src/assets/fonts/patika-700.woff2"],
+              src: ["./assets/fonts/patika-700.woff2"],
             },
           ],
         },
@@ -135,7 +138,7 @@ export default defineConfig({
             {
               weight: 400,
               style: "normal",
-              src: ["./src/assets/fonts/orbix-regular.woff2"],
+              src: ["./assets/fonts/orbix-regular.woff2"],
             },
           ],
         },
@@ -150,27 +153,27 @@ export default defineConfig({
             {
               weight: 300,
               style: "normal",
-              src: ["./src/assets/fonts/ibm-plex-300.woff2"],
+              src: ["./assets/fonts/ibm-plex-300.woff2"],
             },
             {
               weight: 400,
               style: "normal",
-              src: ["./src/assets/fonts/ibm-plex-400.woff2"],
+              src: ["./assets/fonts/ibm-plex-400.woff2"],
             },
             {
               weight: 500,
               style: "normal",
-              src: ["./src/assets/fonts/ibm-plex-500.woff2"],
+              src: ["./assets/fonts/ibm-plex-500.woff2"],
             },
             {
               weight: 600,
               style: "normal",
-              src: ["./src/assets/fonts/ibm-plex-600.woff2"],
+              src: ["./assets/fonts/ibm-plex-600.woff2"],
             },
             {
               weight: 700,
               style: "normal",
-              src: ["./src/assets/fonts/ibm-plex-700.woff2"],
+              src: ["./assets/fonts/ibm-plex-700.woff2"],
             },
           ],
         },
