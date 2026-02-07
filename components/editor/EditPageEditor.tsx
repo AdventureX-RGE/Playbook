@@ -8,8 +8,27 @@ import {
   type EditorInstance,
   type JSONContent,
 } from "novel";
+import { useStore } from "@nanostores/react";
 import { Marked } from "marked";
 import { asideTypes, type AsideType, type AsideConfig } from "../../config/aside-types";
+import {
+  captureToken,
+  redirectToLogin,
+  submitToGitHub,
+} from "../../lib/github";
+import {
+  $isEditing,
+  $isDirty,
+  $editorContent,
+  $submitStatus,
+  $submitMessage,
+  $submitRequested,
+  restoreDraft,
+  saveDraft,
+  clearDraft,
+  markPendingSubmit,
+  consumePendingSubmit,
+} from "../../stores/editor";
 
 function extractFilename(raw: string): string {
   const segment = decodeURIComponent(raw).split("/").pop() ?? "";
@@ -116,83 +135,137 @@ function buildInitialContent(source: string): JSONContent {
 
 interface EditPageEditorProps {
   source: string;
+  filePath: string;
 }
 
 const EXIT_DURATION = 250;
 
-export default function EditPageEditor({ source }: EditPageEditorProps) {
-  const [isEditing, setIsEditing] = useState(false);
+export default function EditPageEditor({ source, filePath }: EditPageEditorProps) {
+  const isEditing = useStore($isEditing);
+  const isDirty = useStore($isDirty);
+
   const [isClosing, setIsClosing] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const initialContent = useRef<JSONContent>(buildInitialContent(source));
   const markedRef = useRef<Marked | null>(null);
 
-  const activate = useCallback(() => {
-    if (!source) return;
-    const imageMap = extractImageMap();
-    markedRef.current = createMarked(imageMap);
-    setIsClosing(false);
-    setIsEditing(true);
-  }, [source]);
-
-  const deactivate = useCallback(() => {
+  const wasEditing = useRef(false);
+  if (wasEditing.current && !isEditing && !isClosing) {
     setIsClosing(true);
-    setTimeout(() => {
-      setIsEditing(false);
-      setIsClosing(false);
-    }, EXIT_DURATION);
-  }, []);
+  }
+  wasEditing.current = isEditing;
 
   useEffect(() => {
-    const onActivate = () => activate();
-    const onDeactivate = () => deactivate();
-    window.addEventListener("edit-page-activate", onActivate);
-    window.addEventListener("edit-page-deactivate", onDeactivate);
-    return () => {
-      window.removeEventListener("edit-page-activate", onActivate);
-      window.removeEventListener("edit-page-deactivate", onDeactivate);
-    };
-  }, [activate, deactivate]);
+    if (isClosing) {
+      const timer = setTimeout(() => setIsClosing(false), EXIT_DURATION);
+      return () => clearTimeout(timer);
+    }
+  }, [isClosing]);
+
+  const visible = isEditing || isClosing;
+
+  const [editorKey, setEditorKey] = useState(0);
+  const wasVisible = useRef(false);
+  if (visible && !wasVisible.current) {
+    setEditorKey((k) => k + 1);
+  }
+  wasVisible.current = visible;
+
+  const draft = restoreDraft(filePath, source);
+  const initialContent = buildInitialContent(draft);
 
   useEffect(() => {
-    if (isEditing && !isClosing) {
+    if (visible) {
+      $editorContent.set(draft);
+    }
+  }, [visible, editorKey]);
+
+  useEffect(() => {
+    if (isEditing) {
+      markedRef.current = createMarked(extractImageMap());
       document.body.classList.add("is-editing");
-    } else if (!isEditing) {
+    } else {
       document.body.classList.remove("is-editing");
     }
-    return () => {
-      document.body.classList.remove("is-editing");
-    };
-  }, [isEditing, isClosing]);
+    return () => document.body.classList.remove("is-editing");
+  }, [isEditing]);
 
   useEffect(() => {
     if (isEditing && previewRef.current && markedRef.current) {
       previewRef.current.innerHTML = mdxToPreviewHtml(
-        source,
+        $editorContent.get() || source,
         markedRef.current,
       );
     }
-  }, [isEditing, source]);
+  }, [isEditing, source, editorKey]);
 
   const handleUpdate = useCallback(
     ({ editor }: { editor: EditorInstance }) => {
+      const text = editor.getText();
+      saveDraft(filePath, text);
       if (previewRef.current && markedRef.current) {
-        const text = editor.getText();
-        previewRef.current.innerHTML = mdxToPreviewHtml(
-          text,
-          markedRef.current,
-        );
+        previewRef.current.innerHTML = mdxToPreviewHtml(text, markedRef.current);
       }
     },
-    [],
+    [filePath],
   );
 
-  if (!isEditing) return null;
+  const handleReset = useCallback(() => {
+    clearDraft(filePath);
+    $editorContent.set(source);
+    setEditorKey((k) => k + 1);
+  }, [filePath, source]);
+
+  const handleSubmit = useCallback(async () => {
+    const token = captureToken();
+    if (!token) {
+      saveDraft(filePath, $editorContent.get());
+      markPendingSubmit(filePath);
+      redirectToLogin();
+      return;
+    }
+
+    $submitStatus.set("submitting");
+    $submitMessage.set("");
+
+    try {
+      const { prUrl } = await submitToGitHub(
+        token,
+        filePath,
+        $editorContent.get(),
+      );
+      $submitStatus.set("success");
+      $submitMessage.set(prUrl);
+      clearDraft(filePath);
+      window.open(prUrl, "_blank", "noopener");
+    } catch (err) {
+      $submitStatus.set("error");
+      $submitMessage.set((err as Error).message);
+    }
+  }, [filePath]);
+
+  useEffect(() => {
+    return $submitRequested.subscribe((requested) => {
+      if (requested) {
+        $submitRequested.set(false);
+        handleSubmit();
+      }
+    });
+  }, [handleSubmit]);
+
+  useEffect(() => {
+    const token = captureToken();
+    const pending = consumePendingSubmit();
+    if (token && pending === filePath) {
+      $isEditing.set(true);
+      setTimeout(handleSubmit, 100);
+    }
+  }, []);
+
+  if (!visible) return null;
 
   return createPortal(
     <div
-      ref={overlayRef}
+      key={editorKey}
       className={`fixed top-15 inset-x-0 bottom-0 z-100 flex flex-col md:flex-row bg-(--color-bg) ${
         isClosing
           ? "animate-[edit-exit_0.25s_ease_forwards]"
@@ -213,12 +286,21 @@ export default function EditPageEditor({ source }: EditPageEditorProps) {
       <div className="flex-none h-1/2 md:flex-1 md:h-auto flex flex-col min-w-0 overflow-hidden">
         <div className="flex items-center justify-between py-2.5 px-5 border-b border-(--color-border) text-(--color-muted) text-[13px] font-medium shrink-0">
           <span>编辑</span>
+          {isDirty && (
+            <button
+              type="button"
+              onClick={handleReset}
+              className="text-[12px] leading-none text-(--color-muted) cursor-pointer bg-transparent border-none p-0 transition-colors duration-150 hover:text-(--color-text) active:opacity-70"
+            >
+              恢复原文
+            </button>
+          )}
         </div>
         <div className="flex-1 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:var(--color-border)_transparent]">
           <EditorRoot>
             <EditorContent
               extensions={extensions}
-              initialContent={initialContent.current}
+              initialContent={initialContent}
               className="h-full"
               editorProps={{
                 attributes: {
