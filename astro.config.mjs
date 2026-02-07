@@ -7,9 +7,11 @@ import partytown from "@astrojs/partytown";
 import tailwindcss from "@tailwindcss/vite";
 
 import react from "@astrojs/react";
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: node({ mode: "standalone" }),
   srcDir: ".",
   site: "https://adventure-x.org",
 
