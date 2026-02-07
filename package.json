@@ -20,7 +20,6 @@
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.17.1",
-    "astro-aws-amplify": "^0.2.4",
     "hono": "^4.11.8",
     "marked": "^17.0.1",
     "nanostores": "^1.1.0",
