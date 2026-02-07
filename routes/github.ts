@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 
-const CLIENT_ID = import.meta.env.GITHUB_CLIENT_ID ?? "";
-const CLIENT_SECRET = import.meta.env.GITHUB_CLIENT_SECRET ?? "";
+const CLIENT_ID = import.meta.env.GH_CLIENT_ID ?? "";
+const CLIENT_SECRET = import.meta.env.GH_CLIENT_SECRET ?? "";
 const SITE_ORIGIN = import.meta.env.SITE_URL ?? "https://playbook.adventure-x.org";
 const CALLBACK_URI = `${SITE_ORIGIN}/api/github/callback`;
 
