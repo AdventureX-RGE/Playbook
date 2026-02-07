@@ -65,6 +65,7 @@ export async function submitToGitHub(
 
   await post(token, `/repos/${OWNER}/${REPO}/forks`, { default_branch_only: true });
   await waitForFork(token, user);
+  await post(token, `/repos/${user}/${REPO}/merge-upstream`, { branch: BRANCH });
 
   const { object } = (await api(token, `/repos/${user}/${REPO}/git/ref/heads/${BRANCH}`)) as {
     object: { sha: string };
