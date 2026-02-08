@@ -24,17 +24,17 @@ const hasSource = pageSource.length > 0;
 ---
 
 <div
-  class="w-full px-4 md:px-8 flex justify-between items-center h-15 bg-[#0E0E0E] border-b border-(--color-border)"
+  class="w-full px-4 md:px-8 flex justify-between items-center gap-2 h-15 bg-[#0E0E0E] border-b border-(--color-border)"
 >
-  <a href="/" class="flex items-center">
+  <a href="/" class="flex items-center shrink-0">
     <PlaybookLogo height={15} />
   </a>
   {
     hasSource && (
-      <div id="header-actions" class="flex items-center gap-2 max-[49.99rem]:mr-11">
+      <div id="header-actions" class="flex items-center gap-2 min-w-0 max-[49.99rem]:mr-11">
         <button
           id="submit-github-btn"
-          class="flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg bg-transparent text-(--color-muted) border border-(--color-border) cursor-pointer text-[13px] font-medium font-[inherit] leading-none hover:text-(--color-text) hover:border-(--color-text) hover:bg-white/4 active:scale-[0.97] opacity-0 pointer-events-none transition-all duration-200"
+          class="collapsed flex items-center shrink-0 gap-1.5 h-8 px-3 max-w-48 overflow-hidden rounded-lg bg-transparent text-(--color-muted) border border-(--color-border) cursor-pointer text-[13px] font-medium font-[inherit] leading-none whitespace-nowrap transition-all duration-200 hover:text-(--color-text) hover:border-(--color-text) hover:bg-white/4 active:scale-[0.97]"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="block shrink-0">
             <path
@@ -49,7 +49,7 @@ const hasSource = pageSource.length > 0;
         </button>
         <button
           id="edit-page-btn"
-          class="flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg bg-transparent text-(--color-muted) border border-(--color-border) cursor-pointer text-[13px] font-medium transition-all duration-150 font-[inherit] leading-none hover:text-(--color-text) hover:border-(--color-text) hover:bg-white/4 active:scale-[0.97]"
+          class="flex items-center gap-1.5 h-8 px-3 min-w-0 overflow-hidden rounded-lg bg-transparent text-(--color-muted) border border-(--color-border) cursor-pointer text-[13px] font-medium transition-all duration-150 font-[inherit] leading-none whitespace-nowrap hover:text-(--color-text) hover:border-(--color-text) hover:bg-white/4 active:scale-[0.97]"
           title="编辑此页"
         >
           <svg
@@ -110,7 +110,7 @@ const hasSource = pageSource.length > 0;
       const status = $submitStatus.get();
       const show = $isEditing.get() && ($isDirty.get() || status === "success" || status === "error");
       const disabled = !show || status === "submitting";
-      submitBtn.classList.toggle("opacity-0", !show);
+      submitBtn.classList.toggle("collapsed", !show);
       submitBtn.classList.toggle("pointer-events-none", disabled);
     }
 
@@ -159,5 +159,12 @@ const hasSource = pageSource.length > 0;
     body.is-editing #header-actions {
       margin-right: 0;
     }
+  }
+
+  #submit-github-btn.collapsed {
+    max-width: 0;
+    margin-right: -0.5rem;
+    opacity: 0;
+    pointer-events: none;
   }
 </style>
