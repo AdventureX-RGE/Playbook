@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import {
 	EditorRoot,
@@ -10,6 +10,7 @@ import {
 } from "novel";
 import { useStore } from "@nanostores/react";
 import { Marked } from "marked";
+import morphdom from "morphdom";
 import {
 	asideTypes,
 	type AsideType,
@@ -41,7 +42,7 @@ function extractFilename(raw: string): string {
 }
 
 function extractImageMap(): Record<string, string> {
-	const contentEl = document.querySelector(".sl-markdown-content");
+	const contentEl = document.querySelector("main .sl-markdown-content");
 	if (!contentEl) return {};
 
 	const map: Record<string, string> = {};
@@ -111,6 +112,21 @@ function mdxToPreviewHtml(source: string, md: Marked): string {
 		.replace(/^import\s+.*$/gm, "");
 
 	return md.parse(preprocessAsides(content), { async: false }) as string;
+}
+
+function morphPreview(container: HTMLElement, html: string) {
+	const next = document.createElement("div");
+	next.innerHTML = html;
+	morphdom(container, next, {
+		childrenOnly: true,
+		onBeforeElUpdated(fromEl, toEl) {
+			if (fromEl.isEqualNode(toEl)) return false;
+			if (fromEl.tagName === "DETAILS" && toEl.tagName === "DETAILS") {
+				if (fromEl.hasAttribute("open")) toEl.setAttribute("open", "");
+			}
+			return true;
+		},
+	});
 }
 
 const extensions = [
@@ -187,8 +203,11 @@ export default function EditPageEditor({
 	}
 	wasVisible.current = visible;
 
-	const draft = restoreDraft(filePath, source);
-	const initialContent = buildInitialContent(draft);
+	const draft = useMemo(() => {
+		void editorKey;
+		return restoreDraft(filePath, source);
+	}, [filePath, source, editorKey]);
+	const initialContent = useMemo(() => buildInitialContent(draft), [draft]);
 
 	useEffect(() => {
 		if (visible) {
@@ -208,21 +227,21 @@ export default function EditPageEditor({
 
 	useEffect(() => {
 		if (isEditing && previewRef.current && markedRef.current) {
-			previewRef.current.innerHTML = mdxToPreviewHtml(
-				$editorContent.get() || source,
-				markedRef.current,
+			morphPreview(
+				previewRef.current,
+				mdxToPreviewHtml(draft, markedRef.current),
 			);
 		}
-	}, [isEditing, source]);
+	}, [isEditing, draft]);
 
 	const handleUpdate = useCallback(
 		({ editor }: { editor: EditorInstance }) => {
 			const text = editor.getText();
 			saveDraft(filePath, text);
 			if (previewRef.current && markedRef.current) {
-				previewRef.current.innerHTML = mdxToPreviewHtml(
-					text,
-					markedRef.current,
+				morphPreview(
+					previewRef.current,
+					mdxToPreviewHtml(text, markedRef.current),
 				);
 			}
 		},
