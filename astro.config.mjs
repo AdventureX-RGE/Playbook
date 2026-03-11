@@ -94,6 +94,13 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 	},
 
+	experimental: {
+		queuedRendering: {
+			enabled: true,
+			contentCache: true,
+		},
+	},
+
 	fonts: [
 			{
 				provider: fontProviders.local(),
