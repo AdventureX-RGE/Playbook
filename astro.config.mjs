@@ -94,8 +94,7 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 	},
 
-	experimental: {
-		fonts: [
+	fonts: [
 			{
 				provider: fontProviders.local(),
 				name: "Patika",
@@ -181,6 +180,5 @@ export default defineConfig({
 					],
 				},
 			},
-		],
-	},
+	],
 });
