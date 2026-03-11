@@ -272,13 +272,13 @@ export default function EditPageEditor({
 				filePath,
 				$editorContent.get(),
 			);
-			$submitStatus.set("success");
 			$submitMessage.set(prUrl);
+			$submitStatus.set("success");
 			clearDraft(filePath);
 			window.open(prUrl, "_blank", "noopener");
 		} catch (err) {
-			$submitStatus.set("error");
 			$submitMessage.set((err as Error).message);
+			$submitStatus.set("error");
 		}
 	}, [filePath]);
 
